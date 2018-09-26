@@ -1,0 +1,18 @@
+<ion-view view-title="文档详情">
+    <ion-nav-bar class="bar-balanced">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="gray-bg">
+        <div class="loading-bar" ng-if="!detail" style="margin-top: 180px"></div>
+        <div class="list" ng-show="detail">
+            <div class="item">
+                <h2 ng-bind="detail.name"></h2>
+                <p ng-bind="'创建人:'+detail.creatorName"></p>
+            </div>
+            <div class="item item-body">
+                <div ng-bind-html="detail.content"></div>
+            </div>
+            <c-attachments input="files"></c-attachments>
+        </div>
+    </ion-content>
+</ion-view>

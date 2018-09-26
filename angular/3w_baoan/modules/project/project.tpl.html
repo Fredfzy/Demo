@@ -1,0 +1,31 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+                ui-sref="main.app"></a>
+        <h1 class="title">项目管理</h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="list">
+            <div class="loading-bar" ng-if="!list" style="margin-top: 180px"></div>
+            <a class="item item-icon-right" ng-repeat="item in list"
+               ui-sref="main.projectDetail({id:item.id})">
+                <h2><span ng-bind="item.name"></span></h2>
+                <p>截至日期：<span ng-bind="item.endtime|date:'yyyy年MM月dd日'"></span></p>
+                <div>
+                    <div style="position: absolute;right: 10px;bottom:10px; width: 55px;height: 55px;">
+                        <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dashoffset="39.25" stroke="#f7d766"
+                                    fill="none"/>
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dasharray="{{item.schedule/100*157}},{{157-item.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                    fill="none"/>
+                        </svg>
+                    </div>
+                    <div style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{item.schedule}}%</div>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

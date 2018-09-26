@@ -1,0 +1,16 @@
+<ion-content class="gray-bg has-subheader">
+    <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()" spinner="lines"></ion-refresher>
+    <div class="list">
+        <a class="item item-icon-right" href="#" ng-repeat="item in list" ng-click="doRead(item)"
+           ui-sref="main.flowView({formId:item.formId,objectId:item.objectId,processId:item.id,flagHandle:flagHandle})">
+            <h2 ng-bind="item.creator+':'+item.name"></h2>
+            <p><span ng-bind="(item.created_date|date:'yyyy年MM月dd日 HH:mm:ss')"></span></p>
+            <i class="icon icon-accessory balanced ion-chevron-right"></i>
+        </a>
+    </div>
+    <ion-infinite-scroll
+            ng-if="getFlagMore()"
+            on-infinite="doLoad()"
+            distance="1%">
+    </ion-infinite-scroll>
+</ion-content>

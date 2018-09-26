@@ -1,0 +1,182 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon-accessory ion-chevron-left" ui-sref="main.workflow({flagHandle:1})"></a>
+
+        <h1 class="title" ng-bind="tableName"></h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg" id="c-resolve">
+        <div class="text-center" style="margin-top: 50%" ng-if="flagApproved&&flagHandle">
+            <h4 class="balanced" ng-bind="infoNothing"></h4>
+        </div>
+        <div class="loading-bar" ng-if="!fields&&!flagApproved" style="margin-top: 180px"></div>
+        <div class="list white-bg" ng-if="!flagApproved">
+            <!--{{formData}}-->
+            <!--{{currentStepObj}}-->
+            <div ng-repeat="item in fields|orderBy:'format'" ng-init="ctrl=item.ctrl">
+                <label ng-if="!item.details&&ctrl!='user'&&ctrl!='users'"
+                       class="item item-input item-text-wrap"
+                       ng-class="{'item-stacked-label':ctrl=='text'||ctrl=='textarea'||ctrl=='upload'||ctrl=='comments'}">
+                    <span class="input-label balanced" ng-bind="item.name"></span>
+
+                    <div ng-if="ctrl!='textarea'&&ctrl!='datetime'&&ctrl!='current'&&ctrl!='dictionary'&&ctrl!='comments'
+                    &&ctrl!='users'&&ctrl!='idmap'&&ctrl!='info'&&ctrl!='select'&&ctrl!='upload'"
+                         ng-bind-html="formData[item.id]"></div>
+                    <div ng-if="ctrl=='comments'" ng-bind-html="formData[item.id]|comments"></div>
+                    <div ng-if="ctrl=='textarea'" class="item-text-wrap" ng-bind-html="formData[item.id]"></div>
+                    <div ng-if="ctrl=='datetime'||ctrl=='current'"
+                         ng-bind="formData[item.id]|date:'yyyy年MM月dd日 HH:mm:ss'"></div>
+                    <v-field ng-if="ctrl=='dictionary'"
+                             input-id="{{formData[item.id]}}" output-field="t_value"
+                             output-src="dictionary"></v-field>
+                    <v-field ng-if="ctrl=='users'"
+                             input-id="{{formData[item.id]}}" output-field="name"
+                             output-src="user" multiple="true"></v-field>
+                    <v-field ng-if="ctrl=='idmap'" input-id="{{formData[item.id]}}" output-field="name"
+                             output-src="{{schema[item.id].keyConfig}}"></v-field>
+                    <v-info ng-if="ctrl == 'info'||ctrl == 'select'"
+                            convert-type="{{schema[item.id].keyConfig}}"
+                            input="formData[item.id]"></v-info>
+                    <v-files ng-if="ctrl=='upload'" input="formData[item.id]"></v-files>
+                </label>
+                <div ng-if="ctrl=='comments'&&schema[item.id].keyConfig==currentStepObj.stepId"
+                     ng-init="ext.flagComments=item.id"></div>
+                <img ng-if="ctrl=='sign'" width="100%" src="{{domain}}/upload/files/{{formData[item.id]}}"/>
+                <c-detail ng-if="item.details&&editableDetails&&editableDetails.indexOf(item.id)>-1"
+                          ng-init="editData[item.id]=formData[item.id]"
+                          label="{{item.name}}" flag-edit="true" input="item" output="editData"></c-detail>
+                <div ng-if="item.details&&(!editableDetails||editableDetails.indexOf(item.id)<0)">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label balanced" ng-bind="item.name"></span>
+                    </label>
+
+                    <div class="item">
+                        <ion-scroll direction="x" style="height: {{(formData[item.id].length+1)*30+50}}px;
+                            margin:-10px">
+                            <table class="table" style="width: {{getWidth(item.details)}}">
+                                <tr>
+                                    <th>#</th>
+                                    <th ng-repeat="item in item.details | orderBy:'format'"
+                                        style="height:10px;overflow: auto;width:auto"
+                                        ng-bind="item.name"></th>
+                                </tr>
+                                <tr ng-repeat="outputItem in formData[item.id]">
+                                    <td ng-bind="$index+1"></td>
+                                    <td ng-repeat="item in item.details | orderBy:'format'">
+                                        <div ng-if="item.ctrl=='checkboxes'">{{outputItem[item.id]?outputItem[item.id]===true?'✅':
+                                            outputItem[item.id]+'✅':''}}</div>
+                                        <div ng-if="item.ctrl!='idmap'&&item.ctrl!='select'&&item.ctrl!='checkboxes'">{{outputItem[item.id]}}</div>
+                                        <v-field ng-if="item.ctrl=='idmap'" input-id="{{outputItem[item.id]}}"
+                                                 output-field="{{item.config=='dictionary'?'t_value':'name'}}"
+                                                 output-src="{{item.config}}"></v-field>
+                                        <v-field ng-if="item.ctrl=='select'" input-id="{{outputItem[item.id]}}"
+                                                 output-field="name"
+                                                 output-src="{{item.config}}"></v-field>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ion-scroll>
+                    </div>
+                </div>
+                <div ng-if="flagHandle&&currentStepObj.editable&&currentStepObj.editable.indexOf(item.id)>=0">
+                    <label ng-if="!item.details&&item.ctrl!='user'&&item.ctrl!='users'"
+                           class="item item-input"
+                           ng-class="{'item-stacked-label':item.ctrl=='text'||item.ctrl=='textarea'}">
+                        <span class="input-label" ng-bind="item.name+'（编辑）'"></span>
+                        <input ng-if="item.ctrl=='text'||item.ctrl=='number'||item.ctrl=='currency'" type="text"
+                               ng-model="editData[item.id]" placeholder="在此输入{{item.name}}">
+                    <textarea ng-if="item.ctrl=='textarea'" placeholder="在此输入{{item.name}}"
+                              ng-model="editData[item.id]" rows="5"></textarea>
+                        <c-datepicker ng-if="item.ctrl=='datetime'" output="editData[item.id]"></c-datepicker>
+                        <c-dictionary ng-if="item.ctrl=='dictionary'" input-src="{{item.config}}"
+                                      output="editData[item.id]"></c-dictionary>
+                        <c-calculator ng-if="item.ctrl == 'calculator'"
+                                      c-form="editData" c-model="editData[item.id]"
+                                      calculation="{{item.config}}"></c-calculator>
+                        <c-sum ng-if="item.ctrl == 'sum'" c-model="editData[item.id]"
+                               form="editData" detail="{{item.config}}"></c-sum>
+                        <c-diff ng-if="item.ctrl == 'datediff'" c-model="editData[item.id]"
+                                start-ref="editData[item.config.split(',')[0]]"
+                                end-ref="editData[item.config.split(',')[1]]"
+                                unit="{{item.config.split(',')[2]}}"></c-diff>
+                        <c-sequence ng-if="item.ctrl == 'sequence'" input-src="{appKey:appKey,objectId:objectId}"
+                                    output="editData[item.id]" format="{{item.config}}"></c-sequence>
+                        <c-sign ng-if="item.ctrl=='sign'" output="editData[item.id]" content-id="{{item.id}}"></c-sign>
+                    </label>
+                    <c-users ng-if="item.ctrl=='user'" label="{{item.name}}" output="editData[item.id]"
+                             output-field="id"></c-users>
+                    <c-users ng-if="item.ctrl=='users'" label="{{item.name}}" output="editData[item.id]"
+                             output-field="id" output-type="str" multiple="true"></c-users>
+                    <c-detail ng-if="item.details" label="{{item.name}}" input="item" output="editData"></c-detail>
+                </div>
+            </div>
+        </div>
+        <div class="list" ng-if="logs">
+            <div class="item item-divider text-center item-balanced">历史流程</div>
+            <div class="item" ng-repeat="item in logs">
+                <h2>由 {{item.name}} {{item.object_type}}<span ng-if="item.actionId==0">给 {{item.action}}</span></h2>
+
+                <p ng-bind="item.operate_date|date:'MM月dd日 HH:mm:ss'"></p>
+
+                <div ng-if="item.action">
+                    <span ng-if="item.actionId==1||item.actionId==2">审批意见：“{{item.action}}”</span>
+                    <span ng-if="item.actionId==3">{{item.action}}</span>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px"></div>
+    </ion-content>
+    <ion-footer-bar ng-if="flagHandle">
+        <div class="button-bar">
+            <button class="button button-balanced button-outline" ng-click="openHandle(0)">拒绝</button>
+            <button class="button button-balanced" ng-click="openHandle(true)">通过</button>
+            <button class="button button-balanced button-outline" ng-click="openAddition()">加签</button>
+        </div>
+    </ion-footer-bar>
+    <!-- <ion-footer-bar ng-if="!flagHandle&&flagWithDraw">
+        <div class="button-bar">
+            <button class="button button-balanced button-outline" ng-click="openWithdraw()"
+                    >撤回至{{deepWithdraw?'发起阶段':'上一节点'}}
+            </button>
+        </div>
+    </ion-footer-bar> -->
+</ion-view>
+<script id="modal-addition.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar-balanced">
+            <h1 class="title">流程加签</h1>
+            <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list">
+                <div class="item item-divider">
+                    加签方式
+                </div>
+                <div class="item item-toggle">
+                    {{flagAddition?'前加签':'后加签'}}
+                    <label class="toggle toggle-balanced">
+                        <input type="checkbox" ng-model="$parent.flagAddition">
+
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+                <div ng-if="!flagAddition">
+                    <div class="item item-input item-stacked-label">
+                        审批意见
+                        <textarea rows="5" ng-model="AdditionData.message" placeholder="在此输入审批意见"></textarea>
+                    </div>
+                    <c-users label="加签人员" output="AdditionData.users"
+                             output-field="object" multiple="true"></c-users>
+                </div>
+                <c-users ng-if="flagAddition" label="加签人员" output="AdditionData.user"
+                         output-field="object"></c-users>
+            </div>
+        </ion-content>
+        <ion-footer-bar class="bar-balanced">
+            <div class="button-bar">
+                <button class="button button-balanced" ng-click="doAddition(AdditionData,flagAddition)">提交</button>
+            </div>
+        </ion-footer-bar>
+    </ion-modal-view>
+</script>

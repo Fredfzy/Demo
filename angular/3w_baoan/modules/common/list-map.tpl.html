@@ -1,0 +1,42 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ng-click="a()"></a>
+        <h1 class="title" ng-bind="title"></h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" ng-model="query" placeholder="在此输入搜索内容">
+        </label>
+        <button class="button button-clear">
+            搜索
+        </button>
+    </div>
+    <ion-content class="has-subheader">
+        <div class="list" ng-if="query">
+            <a class="item item-icon-right"
+               ng-click="go(item)"
+               ng-repeat="item in mods|filter:query">
+                <h2><span ng-bind="item.name"></span></h2>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </a>
+        </div>
+        <div class="list" ng-if="!query">
+            <div ng-repeat="item in list">
+                <div class="item item-icon-right gray-bg item-cat"
+                     ng-click="$parent.curCat=$parent.curCat==item?-1:item">
+                    <h2><span ng-bind="item.name"></span></h2>
+                    <i class="icon icon-accessory ion-chevron-{{curCat==item?'up':'down'}}"
+                       style="color:#1ab394"></i>
+                </div>
+                <a ng-if="curCat==item" class="item item-icon-right"
+                   ng-click="go(subItem)"
+                   ng-repeat="subItem in map[item.id]">
+                    <h2><span ng-bind="subItem.name"></span></h2>
+                    <i class="icon icon-accessory ion-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

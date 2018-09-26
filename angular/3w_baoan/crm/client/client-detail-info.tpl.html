@@ -1,0 +1,6 @@
+<div class="item-divider-slim" ng-repeat-start="item in keySet">
+    {{item.name}}
+</div>
+<div class="item item-text-wrap" ng-repeat-end>
+    {{detail[item.key]||'--'}}
+</div>

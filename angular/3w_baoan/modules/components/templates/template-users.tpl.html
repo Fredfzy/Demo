@@ -1,0 +1,26 @@
+<div class="item item-input item-stacked-label">
+    <span class="input-label" ng-bind="label"></span>
+    <div style="margin-top: 10px" ng-if="!multiple">
+        <button class="button button-icon balanced icon ion-plus-circled pull-left"
+                style="margin: -8px 10px 0 0" ng-click="openSelections()"></button>
+        <div class="wrap-avatar pull-left" ng-if="output">
+            <img src="img/default.png" class="img-avatar">
+            <div ng-bind="displayTemplate"></div>
+        </div>
+    </div>
+    <div style="margin-top: 10px" ng-if="multiple">
+        <button class="button button-icon balanced icon ion-plus-circled pull-left"
+                style="margin: -8px 10px 0 0" ng-click="openSelections()"></button>
+        <!--<ion-scroll direction="x" style="height: 70px;">-->
+        	<div class="item-text-wrap">
+            <span ng-repeat="r in displayTemplate" ng-bind="r.name+' '">
+                <!--<div class="wrap-avatar pull-left">-->
+                    <!--<img src="img/default.png" class="img-avatar"/>-->
+                    <!--<div ng-bind="r.name"></div>-->
+                <!--</div>-->
+            </span>
+            </div>
+            <!--<div style="clear:both "></div>-->
+        <!--</ion-scroll>-->
+    </div>
+</div>

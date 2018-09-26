@@ -1,0 +1,45 @@
+<ion-view>
+    <ion-header-bar class="bar-positive">
+        <!--按钮ios隐藏-->
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ng-click="back()"></a>
+        <h1 class="title">{{titleName}}详情</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="detail-bar">
+            <div class="item-col" ng-click="go('preview')" style="background-color: #3DB0FC;">
+                <div><i class="icon ion-cube"></i></div>
+                <span>总览</span>
+            </div>
+            <div class="item-col" ng-click="go('contact')" style="background-color: #FCD63D;">
+                <div><i class="icon ion-person-stalker"></i></div>
+                <span>联系人</span>
+            </div>
+            <div class="item-col" ng-click="go('transaction')" style="background-color: #89d663;">
+                <div><i class="icon ion-arrow-swap"></i></div>
+                <span>交易情况</span>
+            </div>
+            <div class="item-col" ng-click="go('sales')" style="background-color: #FCD63D;">
+                <div><i class="icon ion-stats-bars"></i></div>
+                <span>销售记录</span>
+            </div>
+            <div class="item-col" ng-click="go('calendar')" style="background-color: #89d663;">
+                <div><i class="icon ion-calendar"></i></div>
+                <span>日程安排</span>
+            </div>
+            <div class="item-col" ng-click="go('logs')" style="background-color: #3DB0FC;">
+                <div><i class="icon ion-clipboard"></i></div>
+                <span>日志</span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="detail-view" class="hide-form-name"></div>
+
+        <div>
+            <v-files ng-if="proFileIds" input="proFileIds"></v-files>
+            <div style="padding: 8px 8px 10px 14px;border: none;margin-bottom: 1px;font-size: 16px;color: #444;"
+                 ng-if="!proFileIds">暂无附件
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

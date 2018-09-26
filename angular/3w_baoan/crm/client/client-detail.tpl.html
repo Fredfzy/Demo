@@ -1,0 +1,25 @@
+<ion-view view-title="{{detail.name}}">
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">{{detail.name}}</h1>
+        <button class="button button-clear" ng-click="openCreate()">联系人</button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list-tab" ng-init="flagTab=0">
+            <a class="item-tab" ui-sref="main.crm.clientDetail.info" ui-sref-active="active"
+                ng-click="flagTab=0;tab()" href="#">
+                基本信息
+                <span class="badge badge-balanced">{{predicate.details.length}}</span>
+            </a>
+            <a class="item-tab" ui-sref="main.crm.clientDetail.deal" ui-sref-active="active"
+                ng-click="flagTab=1;tab()" href="#">
+                成交/机会
+                <span class="badge badge-balanced">{{deal.details.length}}</span>
+            </a>
+            <a class="item-tab" ng-class="{active:flagTab==2}" ng-click="flagTab=2;tab()" href="#">
+                销售记录
+                <span class="badge badge-balanced">{{payment.details.length}}</span>
+            </a>
+        </div>
+        <div ui-view></div>
+    </ion-content>
+</ion-view>

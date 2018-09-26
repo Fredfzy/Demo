@@ -1,0 +1,20 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.home"></a>
+        <h1 class="title">公告详情</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="item">
+            <h2 ng-bind="detail.name"></h2>
+        </div>
+        <div class="item item-body">
+            <div ng-bind-html="detail.content"></div>
+            <p>
+                <span class="subdued" ng-bind="'生效时间: '+(detail.startDate|date:'yyyy年MM月dd日 HH:mm:ss')"></span> <br>
+                <span class="subdued" ng-bind="'截止时间: '+(detail.endDate|date:'yyyy年MM月dd日 HH:mm:ss')"></span>
+            </p>
+        </div>
+        <c-attachments input="files"></c-attachments>
+    </ion-content>
+</ion-view>

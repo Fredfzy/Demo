@@ -1,0 +1,21 @@
+<ion-header-bar class="bar-balanced">
+    <!--<button class="button button-icon icon ion-android-menu" menu-toggle="left"></button>-->
+    <h1 class="title">CRM</h1>
+    <!--<button class="button button-icon icon ion-ios-plus-empty" ng-click="openModal()"></button>-->
+</ion-header-bar>
+<div class="bar bar-subheader item-input-inset">
+    <div class="button-bar">
+        <button class="button button-outline button-balanced"
+                ui-sref-active="active" ui-sref="main.crm.handle">待处理</button>
+        <button class="button button-outline button-balanced"
+                ui-sref-active="active" ui-sref="main.crm.his">历史流程</button>
+    </div>
+</div>
+<ion-content class="has-subheader">
+    <div ui-view></div>
+</ion-content>
+<ion-footer-bar ng-if="currentCat.flagBatch">
+    <div class="button-bar">
+        <button class="button button-balanced" ng-click="doBatch()">批量审批</button>
+    </div>
+</ion-footer-bar>

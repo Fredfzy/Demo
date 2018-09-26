@@ -1,0 +1,12 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">{{addItem?'新增':'编辑'}}联系人</h1>
+        <button class="button button-icon icon ion-ios-close-empty" ng-click="contactModal.hide()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div id="contactView"></div>
+    </ion-content>
+    <ion-footer-bar class="bar bar-footer bar-positive">
+        <h1 class="title" ng-click="addItem?add():edit()">提交</h1>
+    </ion-footer-bar>
+</ion-modal-view>

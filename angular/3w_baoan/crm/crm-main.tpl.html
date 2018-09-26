@@ -1,0 +1,202 @@
+<ion-view view-title="CRM">
+    <ion-header-bar class="bar-balanced">
+        <button class="button button-icon icon ion-android-menu" menu-toggle="left"></button>
+        <h1 class="title">CRM</h1>
+        <button class="button button-icon icon ion-ios-plus-empty" ng-click="openCreate()"></button>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="white-bg" style="padding: 3px 8px">
+            <div class="list-progress">
+                <svg id="svg1" xmlns="http://www.w3.org/2000/svg" style="height: 80px;margin:10px;">
+                    <circle cx="40" cy="40" r="35" stroke-width="5" stroke="#f7d766"
+                            fill="none"/>
+                    <circle cx="40" cy="40" r="35" stroke-width="5"
+                            stroke-dasharray="{{80/100*219.8}}" transform="rotate(-90,40,40)"
+                            stroke-dashoffset="0" stroke="#1ab394"
+                            fill="none"/>
+                    <text x="18" y="48" fill="#1ab394" font-family="Verdana"
+                          font-size="20">80%
+                    </text>
+                </svg>
+                <section>
+                    <div class="item-progress">
+                        <div>目标</div>
+                        <section>
+                            <div style="width: 80%"></div>
+                        </section>
+                    </div>
+                    <div class="item-progress">
+                        <div>预测总额</div>
+                        <section>
+                            <div style="width: 30%"></div>
+                        </section>
+                    </div>
+                    <div class="item-progress">
+                        <div>最终成交</div>
+                        <section>
+                            <div style="width: 40%"></div>
+                        </section>
+                    </div>
+                    <div class="item-progress">
+                        <div>实际回款</div>
+                        <section>
+                            <div style="width: 60%"></div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="list">
+            <div ui-sref="main.crm-client" class="item item-menu item-icon-left">
+                <i class="icon ion-briefcase balanced"></i>
+                新增客户
+                <span class="badge badge-balanced">{{counts.customerCount}}</span>
+            </div>
+            <div class="item item-menu item-icon-left">
+                <i class="icon ion-person-stalker balanced"></i>
+                新增联系人
+                <span class="badge badge-balanced">{{counts.contactCount}}</span>
+            </div>
+            <a ui-sref="main.crm-chance" class="item item-menu item-icon-left">
+                <i class="icon ion-disc balanced"></i>
+                新增机会
+                <span class="badge badge-balanced">{{counts.opportunityCount}}</span>
+            </a>
+            <div class="item item-menu item-icon-left">
+                <i class="icon ion-compose balanced"></i>
+                新增销售记录
+                <span class="badge badge-balanced">{{counts.saleTrackCount}}</span>
+            </div>
+            <div class="item item-divider">
+                交易记录
+            </div>
+            <div class="list-tab" ng-init="flagTab=0">
+                <a class="item-tab" ng-class="{active:flagTab==0}" ng-click="flagTab=0;tab()" href="#">
+                    预测
+                    <span class="badge badge-balanced">{{predicate.details.length}}</span>
+                </a>
+                <a class="item-tab" ng-class="{active:flagTab==1}" ng-click="flagTab=1;tab()" href="#">
+                    成交
+                    <span class="badge badge-balanced">{{deal.details.length}}</span>
+                </a>
+                <a class="item-tab" ng-class="{active:flagTab==2}" ng-click="flagTab=2;tab()" href="#">
+                    回款
+                    <span class="badge badge-balanced">{{payment.details.length}}</span>
+                </a>
+            </div>
+            <div ng-if="flagTab==0">
+                <div class="item" ng-repeat="item in predicate.details|limitTo:predicateLimit">
+                    <h2>{{item.customer_name}}</h2>
+
+                    <p>预计成交日期：{{item.expected_deal_date}} <br>
+                        金额：<i class="icon ion-social-yen gray"></i>
+                        {{item.expected_deal_price|currency:''}}</p>
+                </div>
+                <div class="item item-divider white-bg text-center" ng-if="predicate.details.length>2"
+                     ng-click="collapse('predicate')" style="color:#aaa">
+                    <div ng-if="predicateLimit==2">
+                        <i class="icon ion-ios-arrow-down"></i>
+                        展开全部
+                        <i class="icon ion-ios-arrow-down"></i>
+                    </div>
+                    <div ng-if="predicateLimit>2">
+                        <i class="icon ion-ios-arrow-up"></i>
+                        收起展开
+                        <i class="icon ion-ios-arrow-up"></i>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="flagTab==1">
+                <div class="item" ng-repeat="item in deal.details|limitTo:predicateLimit">
+                    <h2>{{item.customer_name}}</h2>
+
+                    <p>成交日期：{{item.deal_date}} <br>
+                        金额：<i class="icon ion-social-yen gray"></i>
+                        {{item.amount|currency:''}}</p>
+                </div>
+                <div class="item item-divider white-bg text-center" ng-if="deal.details.length>2"
+                     ng-click="collapse('predicate')" style="color:#aaa">
+                    <div ng-if="predicateLimit==2">
+                        <i class="icon ion-ios-arrow-down"></i>
+                        展开全部
+                        <i class="icon ion-ios-arrow-down"></i>
+                    </div>
+                    <div ng-if="predicateLimit>2">
+                        <i class="icon ion-ios-arrow-up"></i>
+                        收起展开
+                        <i class="icon ion-ios-arrow-up"></i>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="flagTab==2">
+                <div class="item" ng-repeat="item in payment.details|limitTo:predicateLimit">
+                    <h2>{{item.customer_name}}</h2>
+
+                    <p>成交日期：{{item.deal_date}} <br>
+                        金额：<i class="icon ion-social-yen gray"></i>
+                        {{item.amount|currency:''}}</p>
+                </div>
+                <div class="item item-divider white-bg text-center" ng-if="deal.details.length>2"
+                     ng-click="collapse('predicate')" style="color:#aaa">
+                    <div ng-if="predicateLimit==2">
+                        <i class="icon ion-ios-arrow-down"></i>
+                        展开全部
+                        <i class="icon ion-ios-arrow-down"></i>
+                    </div>
+                    <div ng-if="predicateLimit>2">
+                        <i class="icon ion-ios-arrow-up"></i>
+                        收起展开
+                        <i class="icon ion-ios-arrow-up"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="item item-divider">
+                <div class="pull-right">共计 <i class="icon ion-social-yen gray"></i>
+                    {{amountToBePaySum|currency:''}}
+                </div>
+                待收的回款
+            </div>
+            <div class="item item-divider white-bg"
+                 ng-repeat="item in amountToBePay|limitTo:amountToBePayLimit">
+                <div>{{item.customerName}}</div>
+                <div class="pull-right"><i class="icon ion-social-yen gray"></i>
+                    {{item.amountTobePay|currency:''}}
+                </div>
+            </div>
+            <div class="item item-divider white-bg text-center" ng-if="amountToBePay.length>4"
+                 ng-click="collapseList('amountToBePay',4)" style="color:#aaa">
+                <div ng-if="amountToBePayLimit==4">
+                    <i class="icon ion-ios-arrow-down"></i>
+                    展开全部
+                    <i class="icon ion-ios-arrow-down"></i>
+                </div>
+                <div ng-if="amountToBePayLimit>4">
+                    <i class="icon ion-ios-arrow-up"></i>
+                    收起展开
+                    <i class="icon ion-ios-arrow-up"></i>
+                </div>
+            </div>
+            <div class="item item-divider">
+                遗忘客户提醒
+            </div>
+            <div class="item" ng-repeat="item in forgetCustomers|limitTo:forgetCustomersLimit">
+                <h2>{{item.customerName}}</h2>
+
+                <p>最后跟进：{{item.lastTrackTime}}</p>
+            </div>
+            <div class="item item-divider white-bg text-center" ng-if="forgetCustomers.length>2"
+                 ng-click="collapseList('forgetCustomers',2)" style="color:#aaa">
+                <div ng-if="forgetCustomersLimit==2">
+                    <i class="icon ion-ios-arrow-down"></i>
+                    展开全部
+                    <i class="icon ion-ios-arrow-down"></i>
+                </div>
+                <div ng-if="forgetCustomersLimit>2">
+                    <i class="icon ion-ios-arrow-up"></i>
+                    收起展开
+                    <i class="icon ion-ios-arrow-up"></i>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,27 @@
+<ion-view view-title="{{title}}">
+    <ion-nav-bar class="bar-balanced">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="gray-bg">
+        <div class="text-center" style="margin-top: 50%" ng-if="list.length==0&&!dirList">
+            <h4 class="balanced" ng-bind="infoNothing"></h4>
+        </div>
+        <div class="list">
+            <div ng-click="doDir(item)" class="item-icon-left item item-icon-right"
+                 ng-repeat="item in dirList">
+                <i class="icon ion-ios-folder-outline"></i>
+                <h2 ng-bind="item.name"></h2>
+                <p>{{item.creatorName}} {{item.createdDate|date:'MM月dd日 HH:mm:ss'}}</p>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </div>
+            <div ng-click="doGo(item)" class="item-icon-left item item-icon-right"
+                 ng-repeat="item in list">
+                <i class="icon ion-ios-copy-outline"></i>
+                <h2 ng-bind="item.display.split('-')"></h2>
+                <p>{{item.creatorName}} {{item.createdDate|date:'MM月dd日 HH:mm:ss'}}</p>
+                <p>{{item.size|byte}}</p>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,149 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.task"></a>
+        <h1 class="title">任务详情</h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader">
+        <div class="button-bar" ng-init="flagTab=0">
+            <button class="button button-balanced button-outline"
+                    ng-class="{'active':flagTab==0}" ng-click="doTab(0)">详情及反馈</button>
+            <button class="button button-balanced button-outline"
+                    ng-class="{'active':flagTab==1}" ng-click="doTab(1)">子任务</button>
+            <button class="button button-balanced button-outline"
+                    ng-class="{'active':flagTab==2}" ng-click="doTab(2)">任务记录</button>
+        </div>
+    </div>
+    <ion-content class="has-subheader gray-bg has-footer">
+        <div class="list" ng-if="flagTab==2">
+            <div class="loading-bar" ng-if="!logs" style="margin-top: 180px"></div>
+            <div class="item" ng-repeat="item in logs">
+                <h2 ng-bind="'由 '+item.actor+' '+item.object_type"></h2>
+                <p ng-bind="item.operate_date|date:'yyyy年MM月dd日 HH:mm:ss'"></p>
+            </div>
+        </div>
+        <div class="list" ng-if="flagTab==1">
+            <div class="loading-bar" ng-if="!list" style="margin-top: 180px"></div>
+            <div class="text-center" ng-if="list.length==0" style="margin-top: 80px">
+                <h4 class="balanced">暂无子任务</h4>
+            </div>
+            <a class="item" ng-repeat="item in list" ng-click="doRead(item)"
+               ui-sref="main.taskDetail({id:item.id})">
+                <h2 ng-bind="item.name"></h2>
+                <p>截至日期：<span ng-bind="item.deadline|date:'yyyy年MM月dd日'"></span></p>
+                <div style="position: absolute;right: 10px;bottom:10px; width: 55px;height: 55px;">
+                    <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="25" stroke-width="3"
+                                stroke-dashoffset="39.25" stroke="#f7d766"
+                                fill="none"/>
+                        <circle cx="27" cy="27" r="25" stroke-width="3"
+                                stroke-dasharray="{{item.schedule/100*157}},{{157-item.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                fill="none"/>
+                    </svg>
+                </div>
+                <div style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{item.schedule}}%</div>
+            </a>
+        </div>
+        <div ng-show="flagTab==0">
+            <div class="loading-bar" ng-if="!detail" style="margin-top: 180px"></div>
+            <div class="list" ng-show="detail">
+                <div class="item">
+                    <h2 ng-bind="detail.name"></h2>
+                    <p>截至时间：<span ng-bind="detail.deadline|date:'yyyy年MM月dd日'"></span></p>
+                    <div style="position: absolute;right: 10px;bottom:10px; width: 55px;height: 55px;">
+                        <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dashoffset="39.25" stroke="#f7d766"
+                                    fill="none"/>
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dasharray="{{detail.schedule/100*157}},{{157-detail.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                    fill="none"/>
+                        </svg>
+                    </div>
+                    <div style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{detail.schedule}}%</div>
+                </div>
+                <div class="item item-divider">任务描述</div>
+                <div class="item item-body">
+                    <div ng-bind-html="detail.description"></div>
+                </div>
+                <div class="item item-divider">负责人</div>
+                <div class="item item-text-wrap">
+                    <h2 ng-bind="detail.leader"></h2>
+                </div>
+                <div class="item item-divider">参与成员</div>
+                <div class="item item-text-wrap">
+                    <h2><span ng-repeat="item in members" ng-bind="item.name+' '"></span></h2>
+                </div>
+                <c-attachments input="files"></c-attachments>
+            </div>
+            <div class="card" ng-repeat="item in feedbacks">
+                <div class="item ">
+                    <h2 ng-bind="item.author"></h2>
+                    <p ng-bind="item.feedbackDate|date:'MM月dd日 HH:mm:ss'"></p>
+                    <div style="position: absolute;right: 10px;bottom:10px; width: 55px;height: 55px;">
+                        <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dashoffset="39.25" stroke="#f7d766"
+                                    fill="none"/>
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dasharray="{{item.schedule/100*157}},{{157-item.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                    fill="none"/>
+                        </svg>
+                    </div>
+                    <div style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{item.schedule}}%</div>
+                </div>
+                <div class="item item-text-wrap" ng-bind-html="item.description"></div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar ng-if="flagTab==0">
+        <div class="button-bar">
+            <button class="button button-balanced" ng-click="openModal()">反馈</button>
+        </div>
+    </ion-footer-bar>
+    <ion-footer-bar ng-if="flagTab==1">
+        <div class="button-bar">
+            <button class="button button-balanced" ng-click="openCreate()">创建子任务</button>
+        </div>
+    </ion-footer-bar>
+</ion-view>
+<script id="modal-feedback.tpl.html" type="text/ng-template">
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">任务反馈</h1>
+        <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <div class="item range range-positive">
+                <i>{{formData.schedule}}</i>
+                <input type="range" name="volume" min="{{detail.schedule}}" max="100"
+                       ng-model="formData.schedule">
+                <i>100</i>
+            </div>
+            <!--<div class="bar">-->
+                <!--<div class="button-bar">-->
+                    <!--<button class="button button-outline button-balanced">-->
+                        <!--<i class="ion-minus"></i>-->
+                    <!--</button>-->
+                    <!--<button class="button button-outline button-balanced"-->
+                            <!--ng-click="doPlusSchedule(formData)">-->
+                        <!--<i class="ion-plus"></i>-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="item item-input item-stacked-label">
+                反馈内容
+                <textarea rows="5" ng-model="formData.description"></textarea>
+            </div>
+            <c-attachments-handler label="上传附件" output="formData.files"></c-attachments-handler>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doFeedBack(formData)">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>
+</script>

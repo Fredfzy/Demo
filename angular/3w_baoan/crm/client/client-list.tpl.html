@@ -1,0 +1,15 @@
+<ion-nav-view view-title="客户" cache-view="true">
+    <ion-header-bar class="bar-balanced">
+        <button class="button button-icon icon ion-android-menu"></button>
+        <h1 class="title">客户</h1>
+        <button class="button button-icon icon ion-ios-plus-empty" ng-click="openCreate()"></button>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="loading" ng-if="!flagLoaded"></div>
+        <a class="item item-icon-right" ng-click="goDetail(item)" ng-repeat="item in list">
+            <h2>{{item.name}}</h2>
+            <p>{{item.industryName}}</p>
+            <i class="icon icon-accessory ion-chevron-right"></i>
+        </a>
+    </ion-content>
+</ion-nav-view>

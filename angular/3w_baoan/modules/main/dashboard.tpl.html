@@ -1,0 +1,92 @@
+<ion-view cache-view="false">
+    <ion-content class="gray-bg" direction="y" scrollbar-y="false">
+        <div style="height: 140px">
+            <ion-slide-box does-continue="true" slide-interval="5000" auto-play="true" ng-if="news" style="height: 140px">
+                <ion-slide class="white-bg text-center" ng-repeat="item in news"
+                           style="background: url({{domain+'/upload/files/'+item.pic}});background-size: cover">
+                    <div class="light" style="padding-top: 30px;font-size: larger;text-shadow: 0 0 5px #000">
+                        <strong ng-bind="item.title"></strong>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+        <div class="list-shortcut">
+            <div class="item-shortcut item-shortcut-2x" ng-click="openAttendance()" style="margin:10px {{marginLeft}}px;">
+                <div class="icon ion-android-create"></div>
+                签到</div>
+            <div class="item-shortcut item-shortcut-3x" ng-click="openContacts()" style="margin:10px {{marginLeft}}px">
+                <div class="icon ion-person"></div>
+                <section>通讯录</section></div>
+            <div class="item-shortcut item-shortcut-3x" style="margin:10px {{marginLeft}}px" ng-click="go('main.favorite')">
+                <div class="icon ion-heart"></div>收藏夹</div>
+            <div class="item-shortcut item-shortcut-2x" style="margin:10px {{marginLeft}}px" ng-click="go('archive')">
+                <div class="icon ion-folder"></div>文档</div>
+            <div class="item-shortcut item-shortcut-2x" style="margin:10px {{marginLeft}}px" ng-click="go('report')">
+                <div class="icon ion-clipboard"></div>报表</div>
+        </div>
+        <div class="list light-bg" style="margin-top: 3px" ng-controller="EveCtrl">
+            <div style="padding: 3px 15px;background: #1ab394;color:#fff">
+                公告
+            </div>
+            <a ui-sref="main.bulletinDetail({id:item.id})" class="item item-icon-right" ng-repeat="item in bulletinList">
+                <h2>{{item.name}}</h2>
+                <p><small>{{item.startDate|date:'MM月dd日'}} 至 {{item.endDate|date:'MM月dd日'}}</small></p>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </a>
+            <div style="padding: 3px 15px;background: #1ab394;color:#fff">
+                最新动态
+            </div>
+            <div class="item item-icon-left item-icon-right" ng-click="type.go(item)"
+                 ng-init="type=types[item.eveType];state=type.states[item.state+0]" ng-repeat="item in eveList">
+                <i class="icon {{type.icon}} balanced"></i>
+                <h2>{{item.name}}</h2>
+                <p>{{item.creatorName}} <small>{{item.createdDate|date:'MM月dd日 HH:mm:ss'}}</small></p>
+                <span class="badge badge-{{state.color}}">{{state.name}}</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<script id="modal-contacts.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar-balanced">
+            <h1 class="title">通讯录</h1>
+            <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+        </ion-header-bar>
+        <div class="bar bar-subheader item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" placeholder="在此输入搜索内容">
+            </label>
+            <button class="button button-clear">
+                搜索
+            </button>
+        </div>
+        <ion-content class="gray-bg has-subheader">
+            <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefreshContacts()" spinner="lines"></ion-refresher>
+            <div class="list">
+                <div ng-repeat="item in userList">
+                    <a class="item item-avatar" href="#" ng-click="item.flagShow=!item.flagShow">
+                        <img src="img/default.png">
+                        <h2 ng-bind="item.name"></h2>
+                        <p ng-bind="item.userGroup+' '+item.userRole"></p>
+                    </a>
+                    <div style="margin-bottom: 10px" ng-if="item.flagShow">
+                        <div class="item item-icon-left">
+                            <i class="icon ion-ios-telephone-outline"></i>
+                            <a href="tel://{{item.mobile}}" ng-bind="item.mobile||'未设置电话'"></a>
+                        </div>
+                        <div class="item item-icon-left">
+                            <i class="icon ion-ios-email-outline"></i>
+                            <a href="mailto://{{item.email}}" ng-bind="item.email||'未设置邮箱'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ion-infinite-scroll
+                    ng-if="getFlagContacts()"
+                    on-infinite="doLoadContacts()"
+                    distance="1%">
+            </ion-infinite-scroll>
+        </ion-content>
+    </ion-modal-view>
+</script>

@@ -1,0 +1,17 @@
+.ke-container-custom {
+    display: block;
+    border: 0;
+    background-color: #f8f8f8;
+    overflow: hidden;
+}
+.ke-container-custom .ke-toolbar {
+    background-color: #FFF;
+    border: 0;
+    padding: 2px 5px;
+    overflow: hidden;
+}
+
+.ke-statusbar{
+    border:0;
+    height: 0;
+}

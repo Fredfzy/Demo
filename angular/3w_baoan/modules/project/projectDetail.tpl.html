@@ -1,0 +1,97 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.project"></a>
+        <h1 class="title">项目详情</h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader">
+        <div class="button-bar" ng-init="flagTab=0">
+            <button class="button button-balanced button-outline"
+                    ng-class="{'active':flagTab==0}" ng-click="doTab(0)">项目详情</button>
+            <button class="button button-balanced button-outline"
+                    ng-class="{'active':flagTab==1}" ng-click="doTab(1)">关联任务</button>
+            <button class="button button-balanced button-outline"
+                    ng-class="{'active':flagTab==2}" ng-click="doTab(2)">项目进展</button>
+        </div>
+    </div>
+    <ion-content class="gray-bg has-subheader">
+        <div class="list" ng-if="flagTab==2">
+            <div class="item" ng-repeat="item in feedList">
+                <p>任务名称：{{item.taskName}}</p>
+                <p>反馈人：{{item.author}}</p>
+                <p>反馈时间：{{item.feedbackDate|date:'yyyy年MM月dd日 HH:mm:ss'}}</p>
+                <p>反馈后进度：{{item.schedule}}%</p>
+            </div>
+        </div>
+        <div class="list" ng-if="flagTab==1">
+            <a class="item item-icon-right" ng-repeat="item in list"
+               ui-sref="main.taskDetail({id:item.id})">
+
+                                <span class="label-lg label-danger" ng-if="item.approve==2">
+                                    <strong>未通过</strong>
+                                </span>
+                <h2><span ng-bind="item.name"></span></h2>
+                <p>截至日期：<span ng-bind="item.deadline|date:'yyyy年MM月dd日'"></span></p>
+                <div ng-if="item.approve==1">
+                    <div style="position: absolute;right: 10px;bottom:10px; width: 55px;height: 55px;">
+                        <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dashoffset="39.25" stroke="#f7d766"
+                                    fill="none"/>
+                            <circle cx="27" cy="27" r="25" stroke-width="3"
+                                    stroke-dasharray="{{item.schedule/100*157}},{{157-item.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                    fill="none"/>
+                        </svg>
+                    </div>
+                    <div style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{item.schedule}}%</div>
+                </div>
+                <div ng-if="item.approve==0" style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">审核中</div>
+                <div ng-if="item.approve==2" style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">未通过</div>
+            </a>
+        </div>
+        <div class="list" ng-show="flagTab==0">
+            <div class="item" ng-bind="detail.name"></div>
+            <div class="item item-divider">项目描述</div>
+            <div class="item">
+                <div style="position: absolute;right: 14px;top:14px; width: 55px;height: 55px;">
+                    <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="25" stroke-width="3"
+                                stroke-dashoffset="39.25" stroke="#f7d766"
+                                fill="none"/>
+                        <circle cx="27" cy="27" r="25" stroke-width="3"
+                                stroke-dasharray="{{detail.schedule/100*157}},{{157-detail.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                fill="none"/>
+                    </svg>
+                </div>
+                <div style="position: absolute;right: 14px;top:14px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{detail.schedule}}%</div>
+                <p>项目类别：{{detail.projectTypeName}}</p>
+                <p>项目级别：{{detail.projectLevelName}}</p>
+                <p>项目内容：<div class="wrap wrap-text" ng-bind-html="detail.description"></div></p>
+            </div>
+            <div class="item item-divider">项目期限</div>
+            <div class="item">
+                <p>开始时间：{{detail.starttime}}</p>
+                <p>结束时间：{{detail.endtime}}</p>
+            </div>
+            <div class="item item-divider">项目参与者</div>
+            <div class="item">
+                <p>负责人：<span ng-repeat="item in leaders" ng-bind="item.name+' '"></span></p>
+                <p>参与成员：<span ng-repeat="item in members" ng-bind="item.name+' '"></span></p>
+            </div>
+            <div class="item item-divider">项目文档</div>
+            <a ui-sref="main.archiveDetail({id:item.id})" class="item item-icon-left item-icon-right" ng-repeat="item in archiveList">
+                <i class="icon ion-ios-folder-outline balanced"></i>
+                <p ng-bind="item.title"></p>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </a>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-balanced button-bar">
+        <button class="button button-balanced" ng-click="openCreate()">创建项目任务</button>
+    </ion-footer-bar>
+</ion-view>
+

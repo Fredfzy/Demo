@@ -1,0 +1,28 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">表单域</h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="cancel()"></button>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" ng-model="searcher" placeholder="在此输入搜索内容">
+        </label>
+        <button class="button button-clear">
+            搜索
+        </button>
+    </div>
+    <ion-content class="has-subheader">
+        <div class="list">
+            <div ng-repeat="item in list|filter:searcher">
+                <div class="item item-icon-right" ng-click="doSelect(item)">
+                    <p ng-repeat="title in titles">{{title}} {{item[ids[$index]]}}</p>
+                    <i class="icon ion-checkmark-circled balanced" ng-if="item.flagSelected"></i>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doConfirm()">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

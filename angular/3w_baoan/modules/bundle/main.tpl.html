@@ -1,0 +1,37 @@
+<ion-tabs class="tabs-light tabs-icon-top tabs-color-balanced">
+
+    <ion-tab title="即时通" ui-sref="main.wefuck" icon-on="ion-ios-chatbubble" icon-off="ion-ios-chatbubble-outline">
+        <ion-nav-view name="wefuck"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="OA" ui-sref="main.home" icon-on="ion-ios-keypad" icon-off="ion-ios-keypad-outline">
+        <ion-nav-view name="dashView"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="CRM" ui-sref="main.crm" icon-on="ion-ios-briefcase" icon-off="ion-ios-briefcase-outline">
+        <ion-side-menus>
+            <ion-side-menu side="left" width="150">
+                <ion-content ng-controller="CrmMenuCtrl">
+                    <div class="list list-borderless">
+                        <a ui-sref="main.crm" class="item item-menu" menu-close>
+                            CRM首页
+                        </a>
+                        <a ui-sref="main.crm-{{item.state}}" class="item item-menu" menu-close
+                           ng-repeat="item in menuList">
+                            {{item.name}}
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-side-menu>
+            <ion-side-menu-content>
+                <ion-nav-view name="crm"></ion-nav-view>
+            </ion-side-menu-content>
+        </ion-side-menus>
+        <!--<div ui-view="crm"></div>-->
+    </ion-tab>
+
+    <ion-tab title="ERP" ui-sref="main.erp" icon-on="ion-ios-paper" icon-off="ion-ios-paper-outline">
+        <ion-nav-view name="erp"></ion-nav-view>
+    </ion-tab>
+
+</ion-tabs>

@@ -1,0 +1,53 @@
+<ion-view view-title="CRM" style="background-color: #f2f2f2">
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">客户管理</h1>
+        <button class="button button-icon icon ion-ios-plus-empty" ng-click="openSearch()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-refresher pulling-text="松开刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="bar item-input-inset search-box">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" ng-model="query" ng-keydown="searchClient($event,query)"
+                       placeholder="在此输入单位名称查询客户">
+            </label>
+        </div>
+        <div class="main-list" ng-click="openDetail(item)" ng-repeat="item in mainList">
+            <div>
+                {{item.name}}
+            </div>
+            <span style="left: 65px;top: 7px;font-size: 16px;color: #003366;white-space:nowrap;max-width: 199px;text-overflow: ellipsis;overflow: hidden;height: 20px;">
+                {{item.name}}
+            </span>
+            <span style="right: 10px;top: 7px;font-size: 16px;color: #003366;width: 48px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                {{item.handlerName}}
+            </span>
+            <span style="left: 65px;bottom: 3px;color: #999;font-size: 13px;">
+                {{item.lastHandleDate|date:'yyyy-MM-dd HH:mm:ss'}}
+            </span>
+            <span style="right: 10px;color: #ff9966;bottom: 3px;font-size: 13px;">
+                查看详情 <i class="ion-chevron-right"></i>
+            </span>
+        </div>
+        <div class="card" ng-if="!mainList||mainList.length==0">
+            <div class="item item-text-wrap">
+                暂无数据
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="flagMore" on-infinite="loadMore()" distance="3%"></ion-infinite-scroll>
+    </ion-content>
+</ion-view>
+<script id="modal-search.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+            <h1 class="title">高级查询</h1>
+            <button class="button button-icon icon ion-ios-close-empty" ng-click="searchBox.hide()"></button>
+        </ion-header-bar>
+        <ion-content>
+            <div id="search-content"></div>
+        </ion-content>
+        <ion-footer-bar class="bar bar-footer bar-positive">
+            <h1 class="title" ng-click="search(searchData)">搜索</h1>
+        </ion-footer-bar>
+    </ion-modal-view>
+</script>

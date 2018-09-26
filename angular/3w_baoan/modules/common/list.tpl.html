@@ -1,0 +1,26 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <!--知识文档返回按钮ios隐藏-->
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ng-click="b()"></a>
+        <h1 class="title" ng-bind="title"></h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <ion-list>
+            <ion-item class="list">
+                <div ng-click="doGo(item)" class="item-icon-left item item-icon-right"
+                     ng-repeat="item in list">
+                    <i class="icon {{icon}}"></i>
+                    <h2 ng-bind="item.name"></h2>
+                    <i ng-if="!flagFinal" class="icon icon-accessory ion-chevron-right"></i>
+                </div>
+            </ion-item>
+        </ion-list>
+        <!--<div class="text-center" style="margin-top: 50%" ng-if="list.length==0">
+            <h4 class="balanced" ng-bind="infoNothing"></h4>
+        </div>-->
+        <!--<div class="list">
+        </div>-->
+    </ion-content>
+</ion-view>

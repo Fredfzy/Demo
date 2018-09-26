@@ -1,0 +1,31 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.app"></a>
+        <h1 class="title">帮助</h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="text" ng-model="name" ng-change="search(name)"/>
+        </div>
+        <div class="list white-bg">
+            <div class="item item-divider">Q: 如何清除微信浏览器缓存?</div>
+            <div class="item item-text-wrap">
+                A: 苹果用户点击右上角三圆点按钮->刷新页面 <br/>
+                安卓用户退出微信进程再点击进入
+            </div>
+            {{datetime}}
+            <div class="item item-input">
+                <span class="input-label">时间</span>
+                <c-datepicker output="datetime"></c-datepicker>
+            </div>{{text}}
+            <div class="item item-input"
+                 ng-repeat="item in [{text:''},{text:''},{text:''}] track by $index">
+                {{item}}{{text}}
+                <input type="text" ng-model="text"/>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

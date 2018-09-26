@@ -1,0 +1,24 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.app"></a>
+        <h1 class="title">考勤记录</h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader text-center">
+        <c-datepicker output="date" do-change="doDate(year,month,date)"></c-datepicker>
+    </div>
+    <ion-content class="has-subheader gray-bg">
+        <div class="text-center" ng-if="!list" style="margin-top: 50%">
+            <h4 class="balanced"> 当日无考勤记录</h4>
+        </div>
+        <div class="list" ng-if="list">
+            <div class="item item-icon-right" ng-repeat="item in list" ng-click="doMap(item.coordx,item.coordy)">
+                <h2>{{item.name}}</h2>
+                <p>{{item.location}}</p>
+                <p>{{item.timeStr}}</p>
+                <p>“{{item.message}}”</p>
+                <i class="icon ion-ios-location balanced"></i>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

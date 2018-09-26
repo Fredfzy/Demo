@@ -1,0 +1,46 @@
+
+.list-progress{
+    position:relative;
+}
+.list-progress>section{
+    position:absolute;
+    right:5px;
+    left:100px;
+    top:10px;
+}
+.item-progress{
+    position:relative;
+    margin-bottom:3px;
+}
+.item-progress>div{
+    width:60px;
+    font-size:14px;
+    text-align:right;
+}
+.item-progress>section{
+    background:#f8f8f8;
+    height:14px;
+    position:absolute;
+    right:0;
+    left:70px;
+    top:3px;
+}
+.item-progress>section>div{
+    background:#1ab394;
+    height:100%;
+}
+.list-tab{
+    background:#fff;
+    display:flex;
+}
+.item-tab{
+    flex:1;
+    color:#000;
+    text-align:center;
+    font-size:14px;
+    height:40px;
+    line-height:40px;
+}
+.item-tab.active{
+    border-bottom:3px solid #1ab394;
+}

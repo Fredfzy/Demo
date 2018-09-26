@@ -1,0 +1,98 @@
+<ion-view view-title="内部邮件">
+    <ion-side-menus>
+        <ion-side-menu side="left">
+            <ion-content style="background: #293846">
+                <ul class="list list-borderless" >
+                    <li class="item menu-item" menu-close ng-class="{'menu-active':item.id==flagTab}"
+                        ng-click="doTab(item)" ng-repeat="item in tabs">
+                        <div ng-if="item.id==flagTab"
+                             style="height: 50px;width: 5px;background: #1ab394;position: absolute;left:0;top:0"></div>
+                        {{item.name}}
+                        <span class="badge badge-balanced" ng-bind="unread" ng-if="item.id==1"></span>
+                    </li>
+                </ul>
+            </ion-content>
+        </ion-side-menu>
+        <ion-side-menu-content>
+    <ion-nav-bar class="bar-balanced">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-android-menu" menu-toggle="left"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon ion-ios-plus-empty" ng-click="openCreate()"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" ng-model="content" placeholder="在此输入搜索内容">
+        </label>
+        <button class="button button-clear" ng-click="doSearch(content)">
+            搜索
+        </button>
+    </div>
+    <ion-content class="gray-bg has-subheader">
+        <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()" spinner="lines"></ion-refresher>
+        <div class="list">
+            <a class="item item-icon-right" href="#" ng-repeat="item in list" ng-click="doRead(item)"
+               ui-sref="topicDetail({id:item.id})">
+                <h2>
+                    <i class="ion-record balanced" ng-if="!item.flagRead"></i> {{item.name}}</h2>
+                <p>{{item.creatorName}} {{item.createdDate|date:'MM月dd日 HH:mm:ss'}}</p>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </a>
+        </div>
+        <ion-infinite-scroll
+                ng-if="getFlagMore()"
+                on-infinite="doLoad()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+        </ion-side-menu-content>
+</ion-view>
+
+<script id="modal-create.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar-balanced">
+            <h1 class="title">创建内部邮件</h1>
+            <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">邮件主题</span>
+                    <input type="text" ng-model="formData.name" placeholder="在此输入邮件主题">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">邮件内容</span>
+                    <textarea rows="5" ng-model="formData.content" placeholder="在此输入邮件内容"></textarea>
+                </label>
+                <c-upload output="formData.fileIds"></c-upload>
+                <div class="item item-toggle">
+                    发送给所有人？
+                    <label class="toggle toggle-balanced">
+                        <input type="checkbox" ng-model="formData.flagAll">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+                <div ng-if="!formData.flagAll">
+                    <c-users output="formData.userIds" label="接收人员" multiple="true"
+                            output-field="object"></c-users>
+                    <c-select output="formData.groupIds" label="接收部门" input-src="groups" output-type="arr"
+                              recursion="true" multiple="true" output-field="id"></c-select>
+                    <c-select output="formData.roleIds" label="接收岗位" input-src="roles" output-type="arr"
+                              multiple="true" output-field="id"></c-select>
+                </div>
+                <div class="item" style="height: 300px" ng-if="formData.flagAll"></div>
+            </div>
+        </ion-content>
+        <ion-footer-bar class="item-input-inset">
+            <button class="button button-full button-balanced icon ion-android-done"
+                    ng-click="doSubmit(formData)">
+                <!--<strong>发送消息</strong>-->
+            </button>
+        </ion-footer-bar>
+    </ion-modal-view>
+</script>

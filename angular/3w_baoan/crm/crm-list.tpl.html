@@ -1,0 +1,11 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <button class="button button-icon icon ion-android-menu" ng-click="toggleLeft()"></button>
+        <h1 class="title">{{title}}</h1>
+        <button class="button button-icon icon ion-ios-plus-empty" ng-click="openCreate()"></button>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="loading" ng-if="!flagLoaded"></div>
+        <div class="list" ng-include="tplItem"></div>
+    </ion-content>
+</ion-view>

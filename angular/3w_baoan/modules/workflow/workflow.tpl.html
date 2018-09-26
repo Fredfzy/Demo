@@ -1,0 +1,105 @@
+<ion-view cache-view="false">
+    <ion-side-menus>
+        <!-- Left menu -->
+        <ion-side-menu side="left">
+            <ion-content style="background: #293846">
+                <ul class="list list-borderless">
+                    <li class="item menu-item" menu-close
+                        ng-class="{'menu-active':item.id==flagTab}"
+                        ng-click="tab(item);$parent.flagTab=$index" ng-repeat="item in tabs">
+                        <div ng-if="$index==flagTab"
+                             style="height: 50px;width: 5px;background: #1ab394;position: absolute;left:0;top:0"></div>
+                        {{item.name}}
+                        <span class="badge badge-balanced" ng-bind="unread"
+                              ng-if="item.id==1"></span>
+                    </li>
+                    <li class="item item-divider item-balanced">工作流类别</li>
+                    <li class="item menu-item" menu-close
+                        ng-class="{'menu-active':item.objectId==flagCat}"
+                        ng-click="groupByMod(item)" ng-repeat="item in mods">
+                        <div ng-if="curMod==item"
+                             style="height: 50px;width: 5px;background: #1ab394;position: absolute;left:0;top:0"></div>
+                        {{item.name}}
+                        <span class="badge badge-balanced" ng-if="item.flagBatch">可批量</span>
+                    </li>
+                </ul>
+            </ion-content>
+        </ion-side-menu>
+
+
+        <ion-side-menu-content>
+            <ion-header-bar class="bar-balanced">
+                <button class="button button-icon icon ion-android-menu"
+                        menu-toggle="left"></button>
+                <h1 class="title" ng-bind="title"></h1>
+                <button class="button button-icon icon ion-ios-close-empty"
+                        ng-click="back_android()"></button>
+            </ion-header-bar>
+            <div class="bar bar-subheader item-input-inset">
+                <div class="button-bar">
+                    <button class="button button-outline button-balanced"
+                            ng-class="{'active':flagHandle}" ng-click="doParentTab(1)">待处理
+                    </button>
+                    <button class="button button-outline button-balanced"
+                            ng-class="{'active':!flagHandle}" ng-click="doParentTab(0)">历史流程
+                    </button>
+                </div>
+            </div>
+            <ion-content class="has-subheader">
+                <ion-refresher pulling-text="下拉刷新..." on-refresh="refresh()"
+                               spinner="lines"></ion-refresher>
+                <div class="list">
+                    <div class="item item-divider item-cat" style="font-size: 15px;">
+                        <span class="ion-record balanced"></span>
+                        <span>审批中 </span>
+                        <span class="ion-record positive"></span>
+                        <span>未提交 </span>
+                        <span class="ion-record assertive"></span>
+                        <span>被拒绝 </span>
+                        <span class="ion-record calm"></span>
+                        <span>已结束 </span>
+                        <span class="ion-record dark"></span>
+                        <span>待重审 </span>
+                    </div>
+                    <div class="loading-bar" ng-if="!pros" style="margin-top: 180px"></div>
+                    <div class="text-center" ng-if="pros&&pros.length==0" style="margin-top: 80px">
+                        <h4 class="balanced">暂无该类别流程</h4>
+                    </div>
+                    <div ng-repeat="item in pros">
+                        <!--<div>{{pros}}</div>-->
+                        <!--<div>{{item}}</div>-->
+                        <a class="item item-icon-right" ng-click="go(item)">
+                            <h2>
+                                <span class="ion-record {{statesStyles[item.state]}}"></span>
+                                <span ng-bind="item.creator+': '+item.name"></span>
+                            </h2>
+                            <p style="margin-left:20px;"><span
+                                    ng-bind="(item.createdDate|date:'MM月dd日 HH:mm:ss')"></span></p>
+                            <i class="icon icon-accessory balanced ion-chevron-right"></i>
+                        </a>
+                    </div>
+                    <!--<div ng-repeat="item in oldPros">-->
+                    <!--<a class="item item-icon-right" ng-click="goOld(item)">-->
+                    <!--<h2>-->
+                    <!--<span class="ion-record {{statesStyles[item.state]}}"></span>-->
+                    <!--<span ng-bind="item.creator+': '+item.name"></span>-->
+                    <!--</h2>-->
+                    <!--<p style="margin-left:20px;"><span ng-bind="(item.created_date|date:'MM月dd日 HH:mm:ss')"></span></p>-->
+                    <!--<i class="icon icon-accessory balanced ion-chevron-right"></i>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                </div>
+                <ion-infinite-scroll
+                        ng-if="flagMore"
+                        on-infinite="loadMore()"
+                        distance="1%">
+                </ion-infinite-scroll>
+            </ion-content>
+            <ion-footer-bar ng-if="currentCat.flagBatch">
+                <div class="button-bar">
+                    <button class="button button-balanced" ng-click="doBatch()">批量审批</button>
+                </div>
+            </ion-footer-bar>
+        </ion-side-menu-content>
+    </ion-side-menus>
+</ion-view>

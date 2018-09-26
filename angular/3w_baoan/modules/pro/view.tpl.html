@@ -1,0 +1,83 @@
+<ion-view cache-view="false">
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon-accessory ion-chevron-left" ng-click="goBack()"></a>
+
+        <h1 class="title">{{name}}</h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <ion-refresher pulling-text="刷新数据" on-refresh="doRefresh()" spinner="lines"></ion-refresher>
+        <div id="mod-view"></div>
+        <div class="item" style="margin-top: 10px;" ng-if="proFileIds&&!logs">
+            <div>{{name}}附件</div>
+            <c-upload preset="proFileIds" output="$parent.proFileIds" output-type="arr"></c-upload>
+        </div>
+        <div class="light-bg" ng-if="proFileIds&&logs" style="margin-top: 5px">
+            <div class="item item-divider text-center balanced item-block">附件</div>
+            <v-files input="proFileIds"></v-files>
+        </div>
+        <div class="list light-bg" ng-if="logs" style="margin-top: 5px">
+            <div class="item item-divider text-center balanced item-block">历史流程</div>
+            <div class="item item-text-wrap" ng-repeat="item in logs">
+                <span ng-if="item.actionId!=5">由 <strong ng-bind="item.name"></strong></span>
+                <span ng-if="item.actionId==1" ng-bind-html="item.message"></span>
+
+                <div ng-if="item.actionId==2">
+                    <span>在 <strong>{{nodesMap[item.nodeId].name}}节点</strong> 审批通过 {{item.ext}}</span>
+
+                    <div ng-if="item.message" class="item-log-message" style="margin:3px -10px"
+                         ng-bind-html="item.message"></div>
+                </div>
+                <div ng-if="item.actionId==3">
+					<span>在 <strong>{{nodesMap[item.nodeId].name}}节点</strong>
+                    拒绝{{item.ext?'至'+item.ext:null}}</span>
+
+                    <div ng-if="item.message" class="item-log-message" style="margin:3px -10px;word-break: break-all"
+                         ng-bind-html="item.message"></div>
+                </div>
+                <span ng-if="item.actionId==4">{{item.ext}}</span>
+                <span ng-if="item.actionId==6">将 <strong ng-bind-html="item.message"></strong> 加入会签</span>
+                <span ng-if="item.actionId==7">将 <strong ng-bind-html="item.message"></strong> 前置加签</span>
+                <span ng-if="item.actionId==8">通知 <strong ng-bind-html="item.message"></strong> </span>
+                <span ng-if="item.actionId==9">保存表单 <span ng-bind-html="item.message"></span> </span>
+                <span ng-if="item.actionId==11">转发给<strong ng-bind-html="item.message"></strong>审批</span>
+                <div ng-if="item.actionId==4&&item.message" class="white-bg pm-xs" style="margin:3px -10px">
+                    "{{item.message}}"
+                </div>
+                <span ng-if="item.actionId==5">流程转移至 <strong>{{item.ext}}节点</strong>
+                交由 <strong ng-bind-html="item.message"></strong>审批</span>
+
+                <div>
+                    <small ng-bind="item.createdDate|date:'MM月dd日 HH:mm:ss'"></small>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px"></div>
+    </ion-content>
+    <ion-footer-bar ng-if="flagWithdraw">
+        <div class="button-bar">
+            <button class="button button-balanced" ng-click="openWithdraw()">撤回</button>
+        </div>
+    </ion-footer-bar>
+    <ion-footer-bar ng-if="flagHandle" ng-show='pro_state!=2'>
+        <div id="btn-assist" class="btn-right" ng-click="openAssist()">前加签</div>
+        <!--<div id="btn-extra" class="btn-right" ng-click="openExtra()">后加签{{extraUserIds && extraUserIds.length+'人'}}-->
+        </div>
+        <div id="btn-extra" class="btn-right" ng-click="openExtra()">转交{{extraUserIds && extraUserIds.length+'人'}}
+        </div>
+        <!--<div id="btn-broadcast" class="btn-right" ng-click="openBro()">-->
+        <!--通知</div>-->
+        <div class="button-bar">
+
+            <button class="button button-assertive button-outline icon-left ion-android-close"
+                    ng-click="openHandle(false)">
+                拒绝
+            </button>
+            <button class="button button-balanced icon-right ion-android-done" ng-click="openHandle(true)">
+                通过
+            </button>
+            <!--<button class="button button-balanced button-outline icon-left ion-android-share" ng-click="forward()">
+                转发
+            </button>-->
+        </div>
+    </ion-footer-bar>
+</ion-view>

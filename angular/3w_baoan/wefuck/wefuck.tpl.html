@@ -1,0 +1,31 @@
+<ion-header-bar class="bar-balanced">
+    <h1 class="title">即时通</h1>
+    <button class="button button-icon icon ion-ios-plus-empty" ng-click="openCreate()"></button>
+</ion-header-bar>
+<ion-content class="light-bg">
+    <div class="item-input-inset" style="padding:0 10px">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" placeholder="在此输入搜索内容">
+        </label>
+        <button class="button button-clear">
+            搜索
+        </button>
+    </div>
+    <div class="list">
+        <div class="item-wefuck">
+            <img src="img/avatar_generic.png" alt=""/>
+            <div>小助手拳喂
+                <div>9</div></div>
+            <section>{{item.lastCum.datetime|date:'MM-dd HH:mm'}}</section>
+            <p>欢迎莅临</p>
+        </div>
+        <div class="item-wefuck" ng-repeat="item in fuckedWhores">
+            <c-avatar src="{{item.icon}}"></c-avatar>
+            <div>{{item.name}}
+                <div ng-if="item.creampiesCount">{{item.creampiesCount}}</div></div>
+            <section>{{item.lastCum.datetime|date:'MM-dd HH:mm'}}</section>
+            <p>{{item.lastCum.msg}}</p>
+        </div>
+    </div>
+</ion-content>

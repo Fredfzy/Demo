@@ -1,0 +1,28 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.app"></a>
+        <h1 class="title">公司信息</h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="list white-bg">
+            <div class="item item-icon-left item-icon-right">
+                <i class="icon ion-ios-personadd-outline"></i>
+                <h2>公司员工</h2>
+                <span class="badge badge-balanced" ng-bind="summary[0]">33</span>
+            </div>
+            <a ui-sref="main.groups" class="item item-icon-left item-icon-right">
+                <i class="icon ion-ios-browsers-outline"></i>
+                <h2>部门组织</h2>
+                <span class="badge badge-balanced" ng-bind="summary[1]">33</span>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </a>
+            <a ui-sref="main.roles" class="item item-icon-left item-icon-right">
+                <i class="icon ion-social-buffer-outline"></i>
+                <h2>岗位结构</h2>
+                <span class="badge badge-balanced" ng-bind="summary[2]">33</span>
+                <i class="icon icon-accessory ion-chevron-right"></i>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

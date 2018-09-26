@@ -1,0 +1,96 @@
+<ion-view>
+    <ion-side-menus>
+        <ion-side-menu side="left">
+            <ion-content style="background: #293846">
+                <div class="list list-borderless" >
+                    <div ng-repeat="item in tabs">
+                        <div ng-if="!item.children" class="item menu-item" menu-close ng-class="{'menu-active':item.id==flagTab}"
+                             ng-click="doTab(item)">
+                            <div ng-if="item.id==flagTab"
+                                 style="height: 50px;width: 5px;background: #1ab394;position: absolute;left:0;top:0"></div>
+                            {{item.name}}
+                        </div>
+                        <div ng-if="item.children">
+                            <div class="item item-divider item-balanced" ng-bind="item.name"></div>
+                            <div class="item menu-item" ng-repeat="subItem in item.children" menu-close
+                                 ng-click="doTab(subItem)">
+                                <div ng-if="subItem.id==flagTab"
+                                     style="height: 50px;width: 5px;background: #1ab394;position: absolute;left:0;top:0"></div>
+                                {{subItem.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-side-menu>
+
+
+        <ion-side-menu-content>
+            <ion-header-bar class="bar-balanced">
+                <button class="button button-icon icon ion-android-menu" menu-toggle="left"></button>
+                <h1 class="title">任务</h1>
+                <button class="button button-icon icon ion-ios-plus-empty" ng-click="openCreate()"></button>
+            </ion-header-bar>
+            <div class="bar bar-subheader">
+                <div class="button-bar">
+                    <button class="button button-balanced button-outline" ng-repeat="item in status" ng-bind="item.name"
+                            ng-click="doStatus(item)" ng-class="{'active':item.id==flagStatus}"></button>
+                </div>
+            </div>
+            <div class="bar bar-subheader item-input-inset" style="margin-top:44px">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search placeholder-icon"></i>
+                    <input type="search" ng-model="condition" placeholder="在此输入搜索内容">
+                </label>
+                <button class="button button-clear" ng-click="doSearch(condition)">
+                    搜索
+                </button>
+            </div>
+            <ion-content class="gray-bg has-subheader" style="margin-top:44px">
+                <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()" spinner="lines"></ion-refresher>
+                <div class="list">
+                    <div class="loading-bar" ng-if="!list" style="margin-top: 180px"></div>
+                    <div class="text-center" ng-if="list.length==0" style="margin-top: 80px">
+                        <h4 class="balanced">暂无该类别任务</h4>
+                    </div>
+                    <a class="item item-icon-right" ng-repeat="item in list"
+                       ui-sref="main.taskDetail({id:item.id})">
+
+                                <span class="label-lg label-danger" ng-if="item.approve==2">
+                                    <strong>未通过</strong>
+                                </span>
+                        <h2><span ng-bind="item.name"></span></h2>
+                        <p>截至日期：<span ng-bind="item.deadline|date:'yyyy年MM月dd日'"></span></p>
+                        <div ng-if="item.approve==1">
+                            <div style="position: absolute;right: 10px;bottom:10px; width: 55px;height: 55px;">
+                                <svg id="svg1" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="27" cy="27" r="25" stroke-width="3"
+                                            stroke-dashoffset="39.25" stroke="#f7d766"
+                                            fill="none"/>
+                                    <circle cx="27" cy="27" r="25" stroke-width="3"
+                                            stroke-dasharray="{{item.schedule/100*157}},{{157-item.schedule/100*157}}" stroke-dashoffset="39.25" stroke="#1ab394"
+                                            fill="none"/>
+                                </svg>
+                            </div>
+                            <div style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">{{item.schedule}}%</div>
+                        </div>
+                        <div ng-if="item.approve==0" style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">审核中</div>
+                        <div ng-if="item.approve==2" style="position: absolute;right: 10px;bottom:10px;font-weight: 600;color:#1ab394;
+                    width: 55px;height: 55px;line-height:55px;text-align: center">未通过</div>
+                    </a>
+                </div>
+                <ion-infinite-scroll
+                        ng-if="getFlagMore()"
+                        on-infinite="doLoad()"
+                        distance="1%">
+                </ion-infinite-scroll>
+            </ion-content>
+        </ion-side-menu-content>
+</ion-view>
+<script id="modal-create.tpl.html" type="text/ng-template">
+
+</script>
+
+

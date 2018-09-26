@@ -1,0 +1,53 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title" ng-bind="label"></h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" placeholder="在此输入搜索内容" ng-model="query">
+        </label>
+        <button class="button button-clear">
+            搜索
+        </button>
+    </div>
+    <ion-content class="gray-bg has-subheader">
+        <div class="list">
+            <!--<div ng-if="!item.sl" ng-repeat="item in list|carMap:query" >
+                &lt;!&ndash;<div>{{list}}</div>&ndash;&gt;
+                &lt;!&ndash;<div>{{item[displayField]}}</div>&ndash;&gt;
+                <div class="item item-icon-right" ng-click="doSelect(item)">
+                    &lt;!&ndash;<div>{{item}}</div>&ndash;&gt;
+                    <h2 ng-bind="item[displayField]"></h2>
+                    <i class="icon ion-checkmark-circled balanced" ng-if="item.flagSelected"></i>
+                </div>
+            </div>
+            <div ng-if="item.sl" ng-repeat="item in list|carMap:{'sl':query}">
+                &lt;!&ndash;<div>{{list}}</div>&ndash;&gt;
+                &lt;!&ndash;<div>{{item[displayField]}}</div>&ndash;&gt;
+                <div class="item item-icon-right" ng-click="doSelect(item)">
+                    &lt;!&ndash;<div>{{item}}</div>&ndash;&gt;
+                    <h2 ng-bind="item[displayField]"></h2>
+                    <i class="icon ion-checkmark-circled balanced" ng-if="item.flagSelected"></i>
+                </div>
+            </div>-->
+
+            <div ng-repeat="item in list|filter:query" ng-if="!item.resName&&!item.t_value">
+                <div class="item item-icon-right" ng-click="doSelect(item)">
+                    <h2 ng-bind="item[displayField]"></h2>
+                    <i class="ico ico-selected" ng-if="item.flagSelected"></i>
+                </div>
+            </div>
+            <div ng-repeat="item in list|carMap:query" ng-if="item.t_value||item.resName">
+                <div class="item item-icon-right" ng-click="doSelect(item)">
+                    <h2 ng-bind="item[displayField]"></h2>
+                    <i class="ico ico-selected" ng-if="item.flagSelected"></i>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doConfirm()">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

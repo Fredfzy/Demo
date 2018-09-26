@@ -1,0 +1,32 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="{{backUrl}}"></a>
+        <h1 class="title" ng-bind="title"></h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="text-center" style="margin-top: 50%" ng-if="list.length==0">
+            <h4 class="balanced" ng-bind="infoNothing"></h4>
+        </div>
+        <div class="list">
+            <div ng-repeat="item in list">
+                <div ng-click="item.flagShow=!item.flagShow" class="item-icon-left item item-icon-right">
+                    <i class="icon {{icon}}"></i>
+                    <h2 ng-bind="item.name"></h2>
+                    <i class="icon ion-ios-plus-empty balanced" ng-if="map[item.id]"></i>
+                </div>
+                <div ng-if="map[item.id]&&item.flagShow" ng-include="'recursion.tpl.html'" ng-init="currentItem=map[item.id]"></div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<script id="recursion.tpl.html" type="text/ng-template">
+    <div style="margin-left:15px" ng-repeat="item in currentItem">
+        <div class="item item-icon-left item-icon-right" ng-click="item.flagShow=!item.flagShow">
+            <i class="icon {{icon}}"></i>
+            <h2 ng-bind="item.name"></h2>
+            <i class="icon ion-ios-plus-empty balanced" ng-if="map[item.id]"></i>
+        </div>
+        <div ng-if="map[item.id]&&item.flagShow" ng-include="'recursion.tpl.html'" ng-init="currentItem=map[item.id]"></div>
+    </div>
+</script>

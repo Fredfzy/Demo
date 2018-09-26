@@ -1,0 +1,13 @@
+<div class="item item-input item-stacked-label">
+    <span class="input-label" ng-bind="label"></span>
+    <div>
+        <div class="file-block text-center balanced" ng-repeat="file in files" style="margin: 5px 0">
+            <div class="loading-tiny" style="margin-top: 10px" ng-if="file.flagLoading"></div>
+        <strong ng-if="!file.flagLoading"
+                ng-bind="file.name.split('.')[1]"></strong>
+        </div>
+        <div class="file-block text-center balanced balanced-bg" ng-click="doSelectFiles()" style="margin: 5px 0">
+            <i class="ion-android-upload" style="color: #fff;font-size: 24px"></i></div>
+    </div>
+</div>
+<input type="file" id="upload" ng-model-instant multiple="multiple" style="display: none"/>

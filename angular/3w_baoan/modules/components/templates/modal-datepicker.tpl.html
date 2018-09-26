@@ -1,0 +1,42 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">{{output}}</h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="bar" style="width: 50%">
+            <button class="button balanced icon icon-accessory ion-chevron-left" ng-click="doYear(year=year-1)"></button>
+            <h1 class="title balanced">{{year}}年</h1>
+            <button class="button icon-accessory balanced icon ion-chevron-right" ng-click="doYear(year=year+1)"></button>
+        </div>
+        <div class="bar" style="width: 50%;left:50%">
+            <button class="button icon-accessory balanced icon ion-chevron-left" ng-click="doMonth(month-1)"></button>
+            <h1 class="title balanced">{{month}}月</h1>
+            <button class="button icon-accessory balanced icon ion-chevron-right" ng-click="doMonth(month+1)"></button>
+        </div>
+        <div style="position: absolute;width: 100%;top:43px">
+            <table style="width: 100%;">
+                <tr>
+                    <th class="padding balanced" ng-repeat="item in weeks">{{item}}</th>
+                </tr>
+                <tr ng-repeat="item in calendarDates">
+                    <th class="padding" ng-class="{'balanced-bg':subItem.flagSelected}"
+                        ng-repeat="subItem in item" ng-click="doDate(subItem)">{{subItem.date}}</th>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+    <ion-footer-bar style="bottom:88px;width: 50%">
+        <button class="button balanced icon icon-accessory ion-chevron-left" ng-click="hour=hour-1;hour<1&&(hour=24)"></button>
+        <h1 class="title balanced"><span ng-if="hour<10">0</span>{{hour}}时</h1>
+        <button class="button icon-accessory balanced icon ion-chevron-right" ng-click="hour=hour+1;hour>24&&(hour=1)"></button>
+    </ion-footer-bar>
+    <ion-footer-bar style="bottom:88px;left:50%;width: 50%">
+        <button class="button balanced icon icon-accessory ion-chevron-left" ng-click="minutes=minutes-1;minutes<0&&(minutes=59)"></button>
+        <h1 class="title balanced"><span ng-if="minutes<10">0</span>{{minutes}}分</h1>
+        <button class="button icon-accessory balanced icon ion-chevron-right" ng-click="minutes=minutes+1;minutes>59&&(minutes=0)"></button>
+    </ion-footer-bar>
+    <ion-footer-bar class="bar-balanced" ng-click="doConfirm(hour,minutes)">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

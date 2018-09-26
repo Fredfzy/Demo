@@ -1,0 +1,72 @@
+.search-box {
+    height: 150px;
+    background: linear-gradient(to right bottom, #fff, #387ef5, #00c8ff);
+    background: -webkit-linear-gradient(to right bottom, #fff, #387ef5, #00c8ff);
+    background: -moz-linear-gradient(to right bottom, #fff, #387ef5, #00c8ff);
+    background: -o-linear-gradient(to right bottom, #fff, #387ef5, #00c8ff);
+}
+
+.main-list {
+    position: relative;
+    height: 60px;
+    margin: 10px 0px 0px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    padding: 8px;
+}
+
+.main-list span {
+    position: absolute;
+}
+
+.main-list > div {
+    width: 45px;
+    height: 45px;
+    border-radius: 30px;
+    background-color: #33ccff;
+    color: #fff;
+    font-size: 24px;
+    text-overflow: clip;
+    overflow: hidden;
+    line-height: 45px;
+    padding-left: 10px;
+}
+
+.detail-bar {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.detail-bar .item-col {
+    height: 75px;
+    width: 33.33%;
+    float: left;
+    color: #fff;
+    position: relative;
+}
+
+.detail-bar .item-col > div {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.detail-bar .item-col > div i {
+    font-size: 26px;
+}
+
+.detail-bar .item-col > span {
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.col {
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    text-align: center;
+}

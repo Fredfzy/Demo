@@ -1,0 +1,49 @@
+<!--<div class="item-divider"></div>-->
+<div class="item light-bg" style="border-bottom: none">{{label}}</div>
+<div class="list list-detail white-bg" ng-init="list=output[input.id];limit=readonly?2:list.length">
+    <div class="card" style="border-radius: 0px" ng-repeat="outputItem in output[input.id]|limitTo:limit" id="{{id+$index}}">
+        <div class="item balanced-bg light item-icon-right">
+            <div class="pull-right" ng-if="!readonly" ng-click="openModal(outputItem,$index)">编辑</div>
+            {{label}}{{$index+1}}
+        </div>
+        <div class="item-data item-data-detail" ng-repeat="item in input.fields | orderBy:'index'"
+             ng-class="{'item-stacked-label':item.ctrl=='textarea'}">
+            <span class="input-label" ng-bind="item.name"></span>
+            <div>
+                <c-convert ng-if="item.ctrl=='user'" convert-src="user" from="outputItem[item.id]"></c-convert>
+                <c-convert ng-if="item.ctrl=='users'" multiple="true" convert-src="user"
+                           from="outputItem[item.id]"></c-convert>
+                <div ng-if="item.ctrl!='user'&&item.ctrl!='users'&&item.ctrl!='rmb'&&item.ctrl!='idmap'&&item.ctrl!='select'&&item.ctrl!='textarea'&&item.ctrl!='datetime'
+                &&item.ctrl!='checkbox'">
+                    {{outputItem[item.id]}}
+                </div>
+                <c-rmb ng-if="item.ctrl=='rmb'" ref-field="outputItem[item.config]" output="outputItem[item.id]"
+                       ref-field-id="outputItem[item.config]"></c-rmb>
+                <div ng-if="item.ctrl=='datetime'">{{outputItem[item.id]|date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                <v-field ng-if="item.ctrl=='idmap'" input-id="{{outputItem[item.id]}}"
+                         output-field="{{item.config=='dictionary'?'t_value':'name'}}"
+                         output-src="{{item.config}}"></v-field>
+                <v-field ng-if="item.ctrl=='select'" input-id="{{outputItem[item.id]}}"
+                         output-field="name"
+                         output-src="{{item.config}}"></v-field>
+                <div ng-if="item.ctrl=='checkbox'"
+                     class="text-center icon ion-{{outputItem[item.id]?'checkmark':'close'}}"></div>
+            </div>
+            <div ng-if="item.ctrl=='textarea'" class="item item-body">
+                <div>{{outputItem[item.id]}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="item-data text-center" ng-if="list.length>2&&readonly" ng-click="resize()">
+        <i class="icon ion-chevron-{{limit==2?'down':'up'}}"></i>
+        {{limit==2?'展开':'收起'}}其他{{output[input.id].length-2}}条{{label}}
+        <i class="icon ion-chevron-{{limit==2?'down':'up'}}"></i>
+    </div>
+    <div style="padding:0 10px;margin-top: 0">
+        <button class="button button-balanced button-block"
+                ng-click="openModal()" ng-if="!readonly">
+            <i class="icon ion-ios-plus-empty"></i>
+            新增{{label}}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<ion-view>
+    <ion-header-bar class="bar-positive">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ng-click="back()"></a>
+        <h1 class="title">总览</h1>
+    </ion-header-bar>
+    <ion-content style="color:#444;background-color: #f2f2f2;">
+        <div ng-if="orderMoney||payMoney" class="row" style="text-align: center;padding: 0;">
+            <div class="col col-33">订单总额</div>
+            <div class="col col-33">回款总额</div>
+            <div class="col col-33">待回款总额</div>
+        </div>
+        <div ng-if="orderMoney||payMoney" class="row" style="text-align: center;padding: 0;margin-top: 0;">
+            <div class="col col-33">{{orderMoney/10000|number:1}}万</div>
+            <div class="col col-33">{{payMoney/10000|number:1}}万</div>
+            <div class="col col-33">{{(orderMoney-payMoney)/10000|number:1}}万</div>
+        </div>
+        <div ng-if="!orderMoney&&!payMoney" style="font-size: 16px;text-align: center;margin-top: 40%;">暂无数据</div>
+    </ion-content>
+</ion-view>

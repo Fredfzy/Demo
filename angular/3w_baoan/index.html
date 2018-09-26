@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="oa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="ionic/css/ionic.css"/>
+    <link rel="stylesheet" href="ionic/css/style.css"/>
+    <link rel="stylesheet" href="modules/crm/crm.css">
+    <script src="ionic/js/ionic.bundle.min.js"></script>
+    <script src="ionic/js/jquery-2.1.1.min.js"></script>
+    <script>
+        (function () {
+
+            ver = 1;
+//            window.domain = 'http://118.26.129.250:8811/'
+//            window.domain = 'http://njhdjsyxgs.gnway.cc:9090/'
+//            window.domain = 'http://localhost:8088'
+//            window.domain = 'http://192.168.1.14:8089'
+//            window.domain = 'http://192.168.1.121:8080'
+//            window.domain = 'http://192.168.1.100:8080'
+//          window.domain = 'http://33oa.gnway.cc:8888'
+//            window.domain = 'http://218.94.16.198:9090/'
+//            window.domain = 'http://xylvtao.gnway.cc:8088/'
+//            window.domain = 'http://192.168.1.39:8080'
+//            window.domain = 'http://33oa.gnway.cc:8912'
+//            window.domain = 'http://192.168.1.14:8888'
+//            window.domain='http://njlckj.gnway.cc:9090'
+
+//            保安
+            window.domain = 'http://112.35.8.75:8888'
+
+//            研究所
+//            window.domain = 'http://oa.nj.ac.cn'
+
+//            贝奇尔
+//            window.domain = 'http://oa.bijurdelimon.cn:8888'
+
+//            致道
+//            window.domain = 'http://218.94.16.198:9090'
+
+//            联成
+//            window.domain = 'http://njlckj.gnway.cc:9090'
+
+
+//            华典
+//            window.domain = 'http://14o98l2850.51mypc.cn'
+
+//            博学
+//            window.domain = 'http://218.94.108.146:8088'
+
+//			window.domain = 'http://192.168.1.15:8080'
+            window.config = 'sate';
+            window.userInfo = {
+                id: 1,
+                name: 'admin',
+//                loginName:'jwx',
+                loginName: 'admin',
+                groupId: 1,
+                groupName: '测试部',
+                roleId: 3,
+                roleName: 'job'
+            };
+            var url = window.location.search;
+            if (url.indexOf("?") != -1) {
+                var strs = url.substr(1).split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    var keyValuePairs = strs[i].split('=');
+                    userInfo[keyValuePairs[0]] = decodeURI(keyValuePairs[1]);
+                    window.domain = strs[strs.length - 1].split('=')[1];
+                }
+                if (userInfo.id) {
+                    userInfo.id = Number(userInfo.id);
+                    userInfo.groupId = Number(userInfo.groupId);
+                    userInfo.roleId = Number(userInfo.roleId);
+                }
+//
+//
+                <!--window.alert(userInfo.id)-->
+////
+//
+                <!--window.alert(userInfo.name)-->
+////
+//
+                <!--window.alert(userInfo.loginName)-->
+////
+//
+                <!--window.alert(userInfo.groupId)-->
+////
+//
+                <!--window.alert(userInfo.groupName)-->
+////
+//
+                <!--window.alert(userInfo.roleId)-->
+////
+//
+                <!--window.alert(userInfo.roleName)-->
+
+            }
+            userInfo
+        })()
+    </script>
+</head>
+<body>
+<ion-nav-view></ion-nav-view>
+<script src="modules/config/app.js"></script>
+<script src="modules/config/api.js"></script>
+<script src="modules/config/util.js"></script>
+
+<script src="engine/core.js"></script>
+<script src="engine/view.js"></script>
+<script src="engine/ctrl.js"></script>
+
+<script src="modules/main/dashboard.js"></script>
+
+<script src="modules/pro/proForm.js"></script>
+<script src="modules/pro/proHandle.js"></script>
+<script src="modules/pro/proView.js"></script>
+
+<script src="modules/main/att.js"></script>
+<script src="modules/topic/topic.js"></script>
+<script src="modules/workflow/workflow.js"></script>
+<script src="modules/task/task.js"></script>
+<script src="modules/app/app.js"></script>
+<script src="modules/report/report.js"></script>
+<script src="modules/project/project.js"></script>
+<script src="modules/archive/archive.js"></script>
+<script src="modules/attendance/attendance.js"></script>
+<script src="modules/components/components.js"></script>
+<script src="modules/test/test.js"></script>
+<script src="modules/flow/flow.js"></script>
+<script src="modules/gongwen/gongwen_ctrl.js"></script>
+
+<script src="modules/crm/client/client.js"></script>
+<script src="modules/crm/client/clientDetail.js"></script>
+<script src="modules/crm/template/template.js"></script>
+</body>
+</html>

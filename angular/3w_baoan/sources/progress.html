@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #progress{
+            width: 300px;
+            height: 40px;
+            border:1px solid #1ab394;
+            margin: 10px;
+        }
+        #progress>div{
+            background: #1ab394;
+            height: 40px;
+            animation: animation 1s;
+        }
+        @-webkit-keyframes animation {
+            0%{
+                width: 0;
+            }
+            100%{
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="progress">
+        <div></div>
+    </div>
+</body>
+</html>

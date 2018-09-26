@@ -1,0 +1,19 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">选择下一步审批节点</h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-radio ng-model="$parent.$parent.selectedNode" ng-value="item"
+                       ng-repeat="item in nextSteps">
+                <h2 ng-bind="item.name"></h2>
+                <v-field ng-if="item.type==0" input-ids="{{item.assignee}}" output-field="name"
+                         output-src="user" multiple="true"></v-field>
+            </ion-radio>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doSelectedSubmit(selectedNode)">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

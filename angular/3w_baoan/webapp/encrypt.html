@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <label for="date">date</label>
+    <input type="text" id="date"/>
+    <label for="mac">mac</label>
+    <input type="text" id="mac"/>
+    <button id="btnGen">生成</button>
+    <a id="aGen" download="expiration.crt" style="display: none"></a>
+</div>
+<div>
+    <label for="num">num</label>
+    <input type="text" id="num"/>
+    <label for="macNum">mac</label>
+    <input type="text" id="macNum"/>
+    <button id="btnGenNum">生成</button>
+    <a id="aGenNum" download="users.crt" style="display: none"></a>
+</div>
+<div id="output"></div>
+</body>
+<script type="application/javascript">
+    var domMac = document.getElementById('mac')
+            ,domDate = document.getElementById('date')
+            ,domMacNum = document.getElementById('macNum')
+            ,domNum = document.getElementById('num')
+            ,btnGen = document.getElementById('btnGen')
+            ,btnGenNum = document.getElementById('btnGenNum')
+            ,output = document.getElementById('output');
+
+    function randomsort(a, b) {
+        return Math.random()>.5 ? -1 : 1;
+    }
+    var pseudosHex = ['$','r','F','%','*','?'];
+    var pseudosHexUsers = ['#','!','L','T','R','Q'];
+    var pseudosNum = ['G','P','&','+','=','X',
+        'H','O',9,6];
+    var pseudosNumUsers = ['@','K','I','W','8','7',
+        'S','5','?','*'];
+    var pseudoDate = [
+        ["&","P","+","G","H",9,"O","=","X",6],
+        ["P","&","G","+","H","X","O","=",9,6],
+        ["P","G","+","=","H","X","&","O",9,6],
+        ["P","G","&","H","+","X","=",6,"O",9],
+        ["+","P","G","X","H","&","=","O",6,9],
+        ["=","P","+","X","&","G",9,"H","O",6],
+        ["P","G","&","+","=","H","X",6,"O",9],
+        ["G","&","+","P","=","X","H","O",6,9],
+        ["G","&","+","=","X","P","H","O",9,6],
+        ["+","P","G","O","&","=",9,"X","H",6]
+    ]
+    for(var i = 4;i<10;i++){
+        var str = [];
+        for(var j = 0;j<10;j++){
+            str.push(pseudosNum.indexOf(pseudoDate[i][j]))
+        }
+        console.log(''+str)
+    }
+    var hex = ['C','F','D','A','B','E']
+    function encryptDate(expDate){
+        expDate = parseInt(expDate);
+        var randomTens = parseInt(Math.random()*89)+10;
+        var tempStr = '';
+        for(var i = 0;i<'9900917'.length;i++){
+            tempStr += pseudosNum.indexOf(pseudoDate['9900917'[i]][i]);
+        }
+        expDate+=19900917;
+        expDate-=parseInt(tempStr);
+        expDate*=100;
+        expDate+=randomTens;
+        return expDate+'';
+    }
+    function encryptMAC(MAC){
+        MAC = MAC.replace(/[0-9]/g, function(word){
+            return pseudosNum[word]}).replace(/[A-F]/g, function(word){
+                    return pseudosHex[hex.indexOf(word)]});
+        return MAC;
+    }
+    function encryptMACNum(MAC){
+        MAC = MAC.replace(/[0-9]/g, function(word){
+            return pseudosNumUsers[word]}).replace(/[A-F]/g, function(word){
+            return pseudosHexUsers[hex.indexOf(word)]});
+        return MAC;
+    }
+    function encryptNum(num){
+        var str = num*num+'19900917';
+        var encryptedNum = '';
+        for(var i = 0;i<str.length;i++){
+            encryptedNum+=pseudosNumUsers[str[i]];
+        }
+        return encryptedNum;
+    }
+    function encrypt(MAC,encryptedDate){
+        var MACarr = MAC.split('-')
+                ,flag2Steps = 0
+                ,tempEncryptedStr=''
+                ,encryptedStr='';
+        for(var i = 0;i<encryptedDate.length;i++){
+            tempEncryptedStr += encryptedDate[i];
+            if(flag2Steps++==1){
+                flag2Steps = 0;
+                encryptedStr += MACarr[(i-1)/2] + tempEncryptedStr
+                tempEncryptedStr='';
+            }
+        }
+        encryptedStr+=MACarr[MACarr.length-1];
+        return encryptedStr;
+    }
+    function encryptUsers(encryptedMAC,encryptedNum){
+        encryptedMAC = encryptedMAC.replace(/[-]/g,'');
+        console.log(encryptedMAC,encryptedMAC.length,
+                encryptedNum,encryptedNum.length)
+        return encryptedMAC.substr(0,2)+encryptedNum.substr(2,2)+
+                encryptedMAC.substr(4,2)+encryptedNum.substr(0,2)+
+                encryptedMAC.substr(2,2)+
+                encryptedNum.substr(4,encryptedNum.length-4)+
+                encryptedMAC.substr(6,encryptedMAC.length-6)+'-'+encryptedNum.length
+    }
+    onload = function () {
+        console.log(encryptUsers(encryptMACNum('60-45-BD-EB-58-02'),encryptNum(50)),
+                encryptUsers(encryptMACNum('60-45-BD-EB-58-02'),encryptNum(50)).length)
+        btnGen.onclick = function () {
+            console.log(domMac.value,domDate.value)
+            output.innerText = encrypt(encryptMAC(domMac.value),
+                    encryptDate(domDate.value));
+            var content = encrypt(encryptMAC(domMac.value),
+                    encryptDate(domDate.value));
+            var aGen = document.getElementById('aGen');
+            aGen.href = 'data:text/plain,'+content;
+            aGen.click();
+        }
+        btnGenNum.onclick = function () {
+//            console.log(domMacNum.value,domNum.value)
+//            output.innerText = encryptUsers(encryptMACNum(domMacNum.value)
+//                    ,encryptNum(domNum.value));
+            var content = encryptUsers(encryptMACNum(domMacNum.value)
+                    ,encryptNum(domNum.value));
+            var aGen = document.getElementById('aGenNum');
+            aGen.href = 'data:text/plain;charset:utf8,'+content;
+            aGen.click();
+        }
+    }</script>
+</html>

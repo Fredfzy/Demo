@@ -1,0 +1,21 @@
+<ion-modal-view id="detail-view">
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title" ng-bind="input.name"></h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content>
+    	<!--<div>{{input}}</div>-->
+        <section></section>
+        <div style="padding: 10px">
+            <button class="button button-block button-assertive"
+                    ng-if="flagEdit"
+                    ng-click="output[input.id].splice($index,1);remove();close()"
+                    style="min-height: 30px;padding: 0">
+                <i class="icon ion-ios-close-empty"></i>
+                删除</button>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doConfirm(formData)">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

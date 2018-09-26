@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="oa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="ionic/css/ionic.css"/>
+    <link rel="stylesheet" href="ionic/css/style.css"/>
+    <link rel="stylesheet" href="crm/crm.css"/>
+    <link rel="stylesheet" href="wefuck/wefuck.css"/>
+    <script src="ionic/js/ionic.bundle.js"></script>
+    <script>
+        (function () {
+            ver = 1;
+//            window.domain = 'http://localhost:8080'
+            window.domain = 'http://33oa.gnway.cc:8912/'
+//            window.domain = 'http://192.168.1.100:8080'
+//            window.domain = 'http://33oa.gnway.cc:8888'
+//            window.domain = 'http://218.94.16.198:9090/'
+//            window.domain = 'http://xylvtao.gnway.cc:8088/'
+//            window.domain = 'http://xyhjxf.gnway.cc:8088'
+            userInfo = {
+                id:1,
+                name:'aa',
+                loginName:'admin',
+//                loginName:'S14084',
+                groupId:1,
+                groupName:'测试部',
+                roleId:3,
+                roleName:'job'
+            }
+        })()
+    </script>
+</head>
+<body>
+<div ui-view></div>
+<script src="modules/bundle/app.js"></script>
+<script src="modules/config/api.js"></script>
+<script src="modules/config/util.js"></script>
+
+<script src="engine/core.js"></script>
+<script src="engine/view.js"></script>
+<script src="engine/ctrl.js"></script>
+
+<script src="wefuck/wefuck.js"></script>
+
+<script src="modules/main/dashboard.js"></script>
+<script src="crm/crm.js"></script>
+<script src="erp/erp.js"></script>
+
+<script src="modules/pro/proForm.js"></script>
+<script src="modules/pro/proHandle.js"></script>
+<script src="modules/pro/proView.js"></script>
+
+<script src="modules/topic/topic.js"></script>
+<script src="modules/workflow/workflow.js"></script>
+<script src="modules/task/task.js"></script>
+<script src="modules/app/app.js"></script>
+<script src="modules/report/report.js"></script>
+<script src="modules/project/project.js"></script>
+<script src="modules/archive/archive.js"></script>
+<script src="modules/attendance/attendance.js"></script>
+<script src="modules/components/components.js"></script>
+<script src="modules/test/test.js"></script>
+<script src="modules/flow/flow.js"></script>
+
+<!--crm-->
+<script src="crm/components/crm-ctrl.js"></script>
+<script src="crm/client/client.js"></script>
+
+<!--erp-->
+
+</body>
+</html>

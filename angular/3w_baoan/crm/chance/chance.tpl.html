@@ -1,0 +1,8 @@
+<div class="item item-icon-right" ng-repeat="item in list" ng-click="go(item)">
+    <h2>{{item.name}}</h2>
+    <p>状态：{{item.statusVal}}</p>
+    <p>客户名称：{{item.customerName}}</p>
+    <p>预计成交金额：<i class="ion-social-yen gray"></i> {{item.expectedDealPrice}}</p>
+    <p>预计成交日期：{{item.expectedDealDate}}</p>
+    <i class="icon icon-accessory ion-chevron-right"></i>
+</div>

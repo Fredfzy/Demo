@@ -1,0 +1,42 @@
+<ion-view>
+    <ion-header-bar class="bar-positive">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ng-click="back()"></a>
+        <h1 class="title">日程安排</h1>
+        <button class="button button-icon icon ion-ios-plus-empty" ng-click="openModal()"></button>
+    </ion-header-bar>
+    <ion-content style="color:#444;background-color: #f2f2f2;">
+        <div ng-repeat="item in calendars" class="main-list"
+             style="height: 150px;margin: 0px 0px 10px;">
+            <div>
+                {{item.creatorName}}
+            </div>
+            <span style="top: 10px;left: 65px;font-size: 18px;">
+                {{item.creatorName}}
+            </span>
+            <!--<span ng-click="openModal(item)"-->
+            <!--style="width: 50px;line-height: 40px;height: 40px;text-align: center;top: 0px;right: 0px;color: #33cc99;">-->
+            <!--编辑-->
+            <!--</span>-->
+            <span style="color: #999;left: 65px;top: 40px;height: 20px;overflow: hidden;">
+                {{item.title}}
+            </span>
+            <span style="left: 65px;bottom: 60px;height: 20px;color: #999;font-size: 13px;overflow: hidden;">
+                时间：{{getDate(item)}}
+            </span>
+            <span style="left: 65px;bottom: 35px;color: #999;font-size: 13px;display: block;overflow: hidden;">
+                参与人：<b style="font-weight: normal;" ng-repeat="item in item.receivers">{{item.name}}</b>
+            </span>
+            <span style="color: #999;bottom: 10px;font-size: 13px;left: 65px;">
+                提醒时间：{{item.notTime}}
+            </span>
+            <span style="color: #999;bottom: 10px;font-size: 13px;right: 10px;">
+                提醒次数：{{item.repeatCount||1}}次
+            </span>
+            <span style="color: #999;top: 0px;font-size: 13px;right: 0px;height: 40px;width: 70px;line-height: 40px;text-align: center;font-weight: bold;">
+                手动提醒
+            </span>
+        </div>
+        <div ng-if="!calendars" style="font-size: 16px;text-align: center;margin-top: 40%;">暂无数据</div>
+    </ion-content>
+</ion-view>

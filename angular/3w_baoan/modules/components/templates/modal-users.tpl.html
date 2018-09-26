@@ -1,0 +1,40 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title" ng-bind="label"></h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" ng-model="query" placeholder="在此输入人员姓名">
+        </label>
+    </div>
+    <ion-content class="gray-bg has-subheader">
+        <div class="list light-bg">
+            <div class="item item-avatar item-icon-right" ng-repeat="item in list|userMap:query"
+                 ng-click="doSelect(item)" ng-if="item.name||item.login_name">
+                <img src="img/default.png">
+                <h2 ng-bind="item.name"></h2>
+                <p><span ng-bind="item.userGroup+' '+item.userRole"></span></p>
+                <i class="icon ion-checkmark-circled balanced" ng-if="item.flagSelected"></i>
+            </div>
+            <div class="item item-avatar item-icon-right" ng-repeat="item in list|filter:query"
+                 ng-click="doSelect(item)" ng-if="!item.name&&!item.login_name">
+                <img src="img/default.png">
+                <h2 ng-bind="item.name"></h2>
+                <p><span ng-bind="item.userGroup+' '+item.userRole"></span></p>
+                <i class="icon ion-checkmark-circled balanced" ng-if="item.flagSelected"></i>
+            </div>
+        </div>
+
+        <!--2-2017.9.7-->
+        <!-- <ion-infinite-scroll
+                 ng-if="!flagNoMore"
+                 on-infinite="doLoad({{size}})"
+                 distance="1%">
+         </ion-infinite-scroll>-->
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doConfirm()">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

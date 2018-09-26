@@ -1,0 +1,42 @@
+<ion-modal-view ng-controller="AttCtrl">
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">签到</h1>
+        <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="item item-divider">
+            当前地理位置
+        </div>
+        <div class="item item-text-wrap item-icon-right">
+            <p ng-bind="locationInfo"></p>
+            <i class="icon ion-ios-location-outline" ng-click="openMap()"></i>
+        </div>
+        <div class="item item-divider">
+            考勤信息
+        </div>
+        <div class="bar">
+            <div class="button-bar">
+                <button class="button button-balanced button-outline" ng-click="formData.type=item.id"
+                        ng-repeat="item in types" ng-bind="item.name" ng-class="{'active':item.id==formData.type}"></button>
+            </div>
+        </div>
+        <div class="light-bg" style="margin-top: 44px">
+            <div class="item" style="padding-top: 5px;padding-bottom: 5px">
+                <div class="file-block text-center balanced" ng-click="doPreview(file)"
+                     ng-repeat="file in files" style="margin: 5px 0">
+                    <img id="file{{$index}}" alt=""/>
+                </div>
+                <div class="file-block text-center balanced balanced-bg" ng-click="doPhoto()" style="margin: 5px 0">
+                    <i class="ion-ios-camera" style="color: #fff;font-size: 30px"></i></div>
+            </div>
+            <div class="item item-input item-stacked-label">
+                <textarea rows="8" ng-model="formData.content" placeholder="在此输入留言"></textarea>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset">
+        <button class="button button-full button-balanced icon ion-android-done"
+                ng-click="doAttendance(formData)">
+        </button>
+    </ion-footer-bar>
+</ion-modal-view>

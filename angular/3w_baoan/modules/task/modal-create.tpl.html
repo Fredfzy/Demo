@@ -1,0 +1,82 @@
+
+    <ion-modal-view>
+        <ion-header-bar class="bar-balanced">
+            <h1 class="title">创建{{$parent.formData.title}}任务</h1>
+            <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list" ng-if="$parent.formData">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">任务标题</span>
+                    <input type="text" ng-model="formData.name" placeholder="在此输入互动主题">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">任务内容</span>
+                    <textarea rows="5" ng-model="formData.description" placeholder="在此输入互动内容"></textarea>
+                </label>
+                <c-users output="$parent.formData.assignee" label="负责人" input="$parent.formData.inputLeaders"
+                         output-field="object"></c-users>
+                <c-users output="$parent.formData.members" label="参与成员" multiple="true"
+                         output-field="object"></c-users>
+                <div ng-if="formData.proStart">
+                    <div class="item item-divider">
+                        <p>项目开始时间: <span ng-bind="formData.proStart|date:'yyyy年MM月dd日'"></span></p>
+                    </div>
+                    <div class="item item-divider">
+                        <p>项目截止日期: <span ng-bind="formData.proEnd|date:'yyyy年MM月dd日'"></span></p>
+                    </div>
+                </div>
+                <div ng-if="$parent.formData.parentId">
+                    <div class="item item-divider">
+                        <p>上级任务开始时间: <span ng-bind="$parent.$parent.formData.parentStart|date:'yyyy年MM月dd日'"></span></p>
+                    </div>
+                    <div class="item item-divider">
+                        <p>上级任务截止日期: <span ng-bind="$parent.$parent.formData.parentEnd|date:'yyyy年MM月dd日'"></span></p>
+                    </div>
+                </div>
+                <label class="item item-input">
+                    <span class="input-label">任务生效时间</span>
+                    <c-datepicker output="formData.startDate"></c-datepicker>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">任务截止时间</span>
+                    <c-datepicker output="formData.deadline"></c-datepicker>
+                </label>
+                <div class="item item-toggle" ng-if="formData.proId">
+                    是否列入里程碑？
+                    <label class="toggle toggle-balanced">
+                        <input type="checkbox" ng-model="formData.important">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+                <c-attachments-handler label="附件上传" output="formData.files"></c-attachments-handler>
+                <div class="item item-toggle">
+                    是否提交流程？
+                    <label class="toggle toggle-balanced">
+                        <input type="checkbox" ng-model="formData.flagFlow">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </div>
+                <div ng-if="formData.flagFlow" ng-init="formData.steps=[{}]">
+                    <div class="item item-divider">配置流程节点</div>
+                    <div ng-repeat="step in formData.steps" style="position: relative">
+                        <c-users output="step.users" label="节点{{$index+1}}" output-field="id"></c-users>
+                        <button class="button button-icon icon ion-close-circled assertive"
+                                ng-click="formData.steps.splice($index,1)" ng-show="formData.steps.length>1"
+                                style="position: absolute;right:5px;top:5px;z-index:10"></button>
+                    </div>
+                    <button class="button button-clear button-block"
+                            ng-click="formData.steps.push({})">增加节点</button>
+                </div>
+            </div>
+        </ion-content>
+        <ion-footer-bar class="item-input-inset">
+            <button class="button button-full button-balanced icon ion-android-done"
+                    ng-click="doSubmit(formData)">
+            </button>
+        </ion-footer-bar>
+    </ion-modal-view>

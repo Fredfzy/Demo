@@ -1,0 +1,10 @@
+<div class="item item-divider">
+    附件列表
+</div>
+<div class="item" ng-if="!input.length">暂无附件</div>
+<!--<div ng-click="doPreview(file)" class="item item-avatar" ng-repeat="file in input">-->
+<!--<img ng-if="file.ext.split('/')[0]=='image'" src="{{domain+file.virtual_path}}">-->
+<!--<img ng-if="file.ext.split('/')[0]!='image'" src="img/file.png">-->
+<!--<h2 ng-bind="file.name"></h2>-->
+<!--</div>-->
+<v-files input="input" ng-if="input"></v-files>

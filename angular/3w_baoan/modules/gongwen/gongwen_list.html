@@ -1,0 +1,33 @@
+
+<ion-view>
+	<ion-header-bar class="bar-balanced">
+		<a class="button button-icon icon ion-ios-arrow-left" ng-click="go_finish()"></a>
+		<h1 class="title" ng-bind="title"></h1>
+	</ion-header-bar>
+	<div class="bar bar-subheader item-input-inset">
+		<label class="item-input-wrapper">
+			<i class="icon ion-ios-search placeholder-icon"></i>
+			<input type="search" ng-model="query" placeholder="在此输入搜索内容">
+		</label>
+		<button class="button button-clear">
+			搜索
+		</button>
+	</div>
+	<ion-content class="has-subheader">
+		<div class="list">
+			<div ng-if="!items" style="text-align: center;margin-top: 50px;">没有数据</div>
+			<div ng-if="modId==278" class="item" ng-repeat="item in items|filter:query" ng-click="go_gongwen_detail(items,$index)">
+				<div>主题词：{{item.ztc}}</div>
+				<div>标题：{{item.bt}}</div>
+				<div>编号：{{item.bh}}</div>
+			</div>
+			<div ng-if="modId==280" class="item" ng-repeat="item in items" ng-click="go_gongwen_detail(items,$index)">
+				<div>提名：{{item.tm}}</div>
+				<div>文号：{{item.wh}}</div>
+				<div>日期：{{item.rq|date:'yyyy-MM-dd HH:mm:ss'}}</div>
+			</div>
+		</div>
+		<ion-infinite-scroll ng-if="flagMore" on-infinite="doLoad()" distance="1%">
+		</ion-infinite-scroll>
+	</ion-content>
+</ion-view>

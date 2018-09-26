@@ -1,0 +1,55 @@
+<api-list>
+    <api>
+        <api-name>消息列表初始化</api-name>
+        <api-url>/oa/news/initAclList?limit={limit}</api-url>
+        <api-params>
+            <param-name>limit</param-name>
+            <param-info>初始化列表条数</param-info>
+        </api-params>
+        <api-response>
+            <response-type>JSON Object</response-type>
+            <response-info>消息数组+消息总数</response-info>
+            <repsonse-json>
+                <![CDATA[
+                    {
+                        //消息类型
+                        o_type:'_flow'||'_type'||'_mesage',
+                        //消息创建时间
+                        created_date:{timestamp}
+                        //流程Id
+                        pId:{Number}
+                        //工作流Id
+                        objectId:{Number}
+                        //表单Id
+                        formId:{Number}
+                        //流程名称
+                        pName:{String}
+                        //流程状态 -1被拒绝,0待编辑,1待审批
+                        state:-1||0||1
+                        //流程创建人
+                        pCreator:{String}
+                        //任务ID
+                        tId:{Number}
+                        //任务名称
+                        tName:{String}
+                        //任务内容
+                        tDes:{String}
+                        //任务负责人
+                        tCreator:{String}
+                        //互动Id
+                        mId:{Number}
+                        //互动标题
+                        mName:{String}
+                        //互动创建时间
+                        mDate:{Date}
+                        //互动内容
+                        mDes:{Text}
+                        //互动创建人
+                        mCreator:{String}
+
+                    }
+                ]]>
+            </repsonse-json>
+        </api-response>
+    </api>
+</api-list>

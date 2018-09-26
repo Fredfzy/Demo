@@ -1,0 +1,20 @@
+<div class="item item-file" ng-repeat="item in presetList">
+    <img id="file-icon-{{item.id}}" />
+    <h2>{{item.name}}</h2>
+    <p>{{item.size|byte}}</p>
+    <i class="icon ion-close-circled" ng-click="removePresetFile(item,$index)"></i>
+</div>
+<div class="item item-file" ng-repeat="item in files track by $index">
+    <img id="file-icon-{{item.timestamp}}" />
+    <h2>{{item.name}}</h2>
+    <p>{{item.readableSize}}</p>
+    <div class="file-progress">
+        <section id="file-progress-{{item.timestamp}}"></section>
+    </div>
+    <i class="icon ion-close-circled" ng-click="removeFile(item,$index)"></i>
+</div>
+<button class="button button-small icon-left ion-android-upload button-balanced"
+        ng-click="selectFiles()" style="margin-top: 5px">
+    上传附件
+</button>
+<input type="file" multiple="multiple" style="display: none"/>

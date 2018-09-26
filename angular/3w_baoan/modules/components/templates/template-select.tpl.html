@@ -1,0 +1,15 @@
+<div class="item item-input item-stacked-label">
+    <span class="input-label" ng-bind="label"></span>
+    <div style="margin-top: 10px" ng-if="!multiple">
+        <button class="button button-icon balanced icon ion-plus-circled pull-left"
+                style="margin: -8px 10px 0 0" ng-click="openSelections()"></button>
+        <div ng-bind="displayTemplate" style="padding-top: 8px"></div>
+    </div>
+    <div style="margin-top: 10px" ng-if="multiple">
+        <button class="button button-icon balanced icon ion-plus-circled pull-left"
+                style="margin: -8px 10px 0 0" ng-click="openSelections()"></button>
+        <div class="item-text-wrap" style="margin:10px">
+            <span ng-repeat="item in displayTemplate" ng-bind="item.name+' '"></span>
+        </div>
+    </div>
+</div>

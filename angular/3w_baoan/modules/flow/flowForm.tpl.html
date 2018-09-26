@@ -1,0 +1,81 @@
+<ion-view cache-view="false" id="c-resolve">
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon-accessory ion-chevron-left" ui-sref="main.workflow({flagHandle:1})"></a>
+        <h1 class="title" ng-bind="tableName"></h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="loading-bar" ng-if="!fields" style="margin-top: 180px"></div>
+        <div class="list white-bg">
+            <!--{{formData}}-->
+            <div ng-repeat="item in fields|orderBy:'format'">
+                <div class="item item-divider" ng-if="item.required&&!formData[item.id]"
+                        ng-init="validations.push(item.id)">{{item.name}}为必填
+                {{formData[item.id]}}{{item.id}}</div>
+                <label ng-if="!item.details&&item.ctrl!='user'&&item.ctrl!='users'&&item.ctrl!='select'&&item.ctrl!='dictionary'"
+                       class="item item-input" id="{{item.id}}"
+                       ng-class="{'item-stacked-label':item.ctrl=='text'||item.ctrl=='textarea'}">
+                    <span class="input-label" ng-bind="item.name"></span>
+                    <div ng-if="item.ctrl=='info'">
+                        <span ng-if="item.config=='name'" ng-bind="userInfo.name"
+                              ng-init="formData[item.id]=userInfo.name"></span>
+                        <span ng-if="item.config=='department'"
+                              ng-bind="userInfo.groupName"
+                              ng-init="formData[item.id]=userInfo.groupId"></span>
+                        <span ng-if="item.config=='job'" ng-bind="userInfo.roleName"
+                              ng-init="formData[item.id]=userInfo.roleId"></span>
+                    </div>
+                    <div ng-if="item.ctrl=='current'" ng-bind="now|date:'yyyy年MM月dd日 HH:mm:ss'"
+                            ng-init="formData[item.id]=(now|date:'yyyy-MM-dd HH:mm:ss')"></div>
+                    <input ng-if="item.ctrl=='text'||item.ctrl=='number'||item.ctrl=='currency'" type="text"
+                           ng-model="formData[item.id]" placeholder="在此输入{{item.name}}">
+                    <textarea ng-if="item.ctrl=='textarea'" placeholder="在此输入{{item.name}}"
+                              ng-model="formData[item.id]" rows="5"></textarea>
+                    <c-datepicker ng-if="item.ctrl=='datetime'" output="formData[item.id]"></c-datepicker>
+                    <c-calculator ng-if="item.ctrl == 'calculator'"
+                                  c-form="formData" c-model="formData[item.id]"
+                                  calculation="{{item.config}}"></c-calculator>
+                    <c-sum ng-if="item.ctrl == 'sum'" c-model="formData[item.id]"
+                           form="formData" detail="{{item.config}}"></c-sum>
+                    <c-diff ng-if="item.ctrl == 'datediff'" c-model="formData[item.id]"
+                            start-ref="formData[item.config.split(',')[0]]"
+                            end-ref="formData[item.config.split(',')[1]]"
+                            unit="{{item.config.split(',')[2]}}"></c-diff>
+                    <c-sequence ng-if="item.ctrl == 'sequence'" input-src="{appKey:appKey,objectId:objectId}"
+                                output="formData[item.id]" format="{{item.config}}"></c-sequence>
+                    <c-rmb ng-if="item.ctrl == 'rmb'" dependency="{{item.config}}"
+                           form="formData" output="formData[item.id]"></c-rmb>
+                    <c-idmap ng-if="item.ctrl == 'idmap'"
+                             input-src="{{item.config}}"
+                             input="formData[item.id]"></c-idmap>
+                    <c-sign ng-if="item.ctrl=='sign'" output="formData[item.id]" content-id="{{item.id}}"></c-sign>
+                    <c-sql ng-if="item.ctrl=='sql'" config="{{item.config}}" output="formData[item.id]" form="formData"></c-sql>
+                    <c-datafield ng-if="item.ctrl=='dataselect'" c-model="formData[item.id]" c-form="formData" mappings="{{item.config}}"></c-datafield>
+                    <c-checkboxes ng-if="item.ctrl=='checkboxes'" output="formData[item.id]"
+                                  options="item.config"></c-checkboxes>
+                </label>
+
+                <c-users ng-if="item.ctrl=='user'" label="{{item.name}}" output="formData[item.id]"
+                         output-field="id"></c-users>
+                <c-users ng-if="item.ctrl=='users'" label="{{item.name}}" output="formData[item.id]"
+                         output-field="id" output-type="str" multiple="true"></c-users>
+                <c-detail ng-if="item.details" label="{{item.name}}" input="item" output="formData"></c-detail>
+                <c-select ng-if="item.ctrl=='select'&&item.config=='departments'" output="formData[item.id]"
+                          input-src="groups" output-type="arr" label="{{item.name}}"
+                          recursion="true" output-field="id"></c-select>
+                <c-select ng-if="item.ctrl=='multiselect'&&item.config=='departments'" output="formData[item.id]"
+                          input-src="groups" output-type="arr" label="{{item.name}}"
+                          recursion="true" output-field="id"></c-select>
+                <c-select ng-if="item.ctrl=='dictionary'" input-src="dic" input="item.config" display-field="t_value"
+                          output="formData[item.id]" output-field="id" label="{{item.name}}"></c-select>
+
+            </div>
+        </div>
+        <div style="height: 100px"></div>
+    </ion-content>
+    <ion-footer-bar>
+        <div class="button-bar">
+            <!--<button class="button button-outline button-balanced" ng-click="flagCat=false">保存</button>-->
+            <button class="button button-balanced" ng-click="doSubmit(formData)">提交</button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

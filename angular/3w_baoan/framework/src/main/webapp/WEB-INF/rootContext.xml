@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-4.0.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/task
+           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+           http://www.springframework.org/schema/data/jpa 
+           http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+	       http://www.springframework.org/schema/tx 
+	       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<!-- circle engine -->
+	<bean id="dao" class="engine.CircleDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+    <bean class="engine.UpdateDB"></bean>
+	<bean id="authFilter" class="engine.AuthFilter"/>
+	<bean id="wcs" class="wechat.WechatSerivce"/>
+	<bean id="wefuckService" class="wefuck.WefuckService"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="userDetailsService" class="authorization.UserService" />
+	<bean id="customProvider" class="authorization.AuthProvider" />
+	<bean id="passwordEncoder" class="authorization.PasswordValidation">  
+	    <constructor-arg name="algorithm" value="md5"></constructor-arg>  
+	</bean>
+	<bean id="outHandler" class="engine.OutHandler" />	
+	<context:annotation-config />
+	<context:property-placeholder location="classpath*:/application.properties" />
+	<security:http pattern="/stylesheets/**" security="none" />
+	<security:http pattern="/font-awesome/**" security="none" />
+	<security:http pattern="/vendors/**" security="none" />
+	<security:http pattern="/img/**" security="none" />
+	<security:http pattern="/upload/**" security="none" />
+	<security:http pattern="/auth/**" security="none" />
+	<security:http pattern="/circle/**" security="none" />
+	<security:http pattern="/favicon.ico" security="none" />
+	<security:http pattern="/login.jsp*" security="none" />
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider
+			user-service-ref='userDetailsService'>
+			<security:password-encoder ref="passwordEncoder"> 
+				<security:salt-source user-property="salt"/> 
+			</security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	<security:authentication-manager id="authManager">
+		<security:authentication-provider
+			user-service-ref='userDetailsService'>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	<security:http auto-config='true' use-expressions="true" authentication-manager-ref="authenticationManager">
+		<security:headers>
+			<security:frame-options policy="SAMEORIGIN" />
+		</security:headers>
+		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/**"
+			access="hasAnyAuthority('USER','ADMIN')" />
+		<security:form-login login-page="/login.jsp"
+			default-target-url="/#/main/home" authentication-failure-url="/login.jsp?error=true"
+			always-use-default-target='true' />
+		<security:logout invalidate-session="true" 
+		      logout-url="/logout" success-handler-ref="outHandler"/>
+	</security:http>
+	<context:component-scan base-package="controllers" />
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="1048576000" />
+	</bean>
+	<bean id="configProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath*:/application.properties</value>
+				<value>classpath*:/log4j.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="properties" ref="configProperties" />
+	</bean>
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+			<bean id="fastJsonHttpMessageConverter"
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+ 		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<mvc:default-servlet-handler />
+	<mvc:view-controller path="/" view-name="index.jsp" />
+</beans>

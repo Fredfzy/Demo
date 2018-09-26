@@ -1,0 +1,10 @@
+<div style="padding: 5px 5px 5px 60px;overflow: hidden;position: relative;height: 60px" class="item item-file"
+     ng-repeat="item in list">
+    <a style="display: block;width: 100%;height: 100%" id="files-icon-{{item.id}}">
+        <img style="position: absolute;left: 16px;height: 50px;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;top: 5px;"
+             id="file-icon-{{item.id}}">
+        <span class="clear" style="clear: both"></span>
+        <h2 style="font-size:14px;margin: 5px 0px;margin-left: 25%">{{item.display}}</h2>
+        <p style="font-size:12px;margin-left: 25%">{{item.size|byte}}</p>
+    </a>
+</div>

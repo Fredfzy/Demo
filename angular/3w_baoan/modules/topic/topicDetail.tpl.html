@@ -1,0 +1,41 @@
+<ion-view>
+    <ion-header-bar class="bar-balanced">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ui-sref="main.topic"></a>
+        <h1 class="title">邮件详情</h1>
+    </ion-header-bar>
+    <ion-content class="gray-bg has-footer">
+        <div class="loading-bar" ng-if="!detail" style="margin-top: 180px"></div>
+        <div class="list" ng-if="detail">
+            <div class="item item-avatar">
+                <img height="100%" src="{{detail.icon|face}}" onerror="this.src='img/anonym.jpg'"/>
+                <h2 ng-bind="detail.name"></h2>
+                <p ng-bind="detail.creatorName+'     '+(detail.createdDate|date:'MM月dd日 HH:mm:ss')"></p>
+            </div>
+            <div class="item item-body">
+                <div ng-bind-html="detail.content"></div>
+                <p>
+                    <a href="#" class="subdued">{{comments.length}} 条回复</a>
+                </p>
+            </div>
+            <v-files input="detail.fileIds"></v-files>
+        </div>
+        <div class="card" ng-repeat="item in replies">
+            <div class="item item-avatar ">
+                <img src="img/default.png">
+                <h2 ng-bind="item.author"></h2>
+                <p ng-bind="item.last_modified_date|date:'MM月dd日 HH:mm:ss'"></p>
+            </div>
+            <div class="item item-text-wrap" ng-bind-html="item.content"></div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class=" item-input-inset">
+        <div ng-show="flagRepling" class="loading-bar"></div>
+        <label ng-if="!flagRepling" class="item-input-wrapper">
+            <input type="search" placeholder="在此输入回复内容" ng-model="$parent.content">
+        </label>
+        <button ng-hide="flagRepling" class="button button-clear" ng-click="doReply(content);content='';">
+            回复
+        </button>
+    </ion-footer-bar>
+</ion-view>

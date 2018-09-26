@@ -1,0 +1,42 @@
+
+.item-wefuck{
+    position:relative;
+    padding:10px 10px 10px 80px;
+    height:70px;
+}
+.item-wefuck img{
+    width:40px;
+    height:40px;
+    position:absolute;
+    left:20px;
+    top:15px;
+    border-radius:40px;
+}
+.item-wefuck>div{
+    font-size:15px;
+}
+.item-wefuck>section{
+    position:absolute;
+    right:15px;
+    top:12px;
+    color:#787877;
+    font-size:12px;
+}
+.item-wefuck>p{
+    margin-top:5px;
+    color:#787877;
+}
+.item-wefuck>div>div{
+    position:absolute;
+    background-color:#ed5565;
+    color:#fff;
+    width:15px;
+    height:15px;
+    font-size:12px;
+    line-height:16px;
+    text-align:center;
+    border-radius:15px;
+    left:50px;
+    top:12px;
+    font-family:Arial;
+}

@@ -1,0 +1,32 @@
+<ion-refresher pulling-text="下拉刷新..." on-refresh="refresh()" spinner="lines"></ion-refresher>
+<div class="list">
+    <div class="item item-divider item-cat">
+        <span class="ion-record balanced"></span>
+        <span>审批中 </span>
+        <span class="ion-record positive"></span>
+        <span>未提交 </span>
+        <span class="ion-record assertive"></span>
+        <span>被拒绝 </span>
+        <span class="ion-record calm"></span>
+        <span>已结束 </span>
+    </div>
+    <div class="loading-bar" ng-if="!pros" style="margin-top: 180px"></div>
+    <div class="text-center" ng-if="pros.length==0" style="margin-top: 80px">
+        <h4 class="balanced">暂无该类别流程</h4>
+    </div>
+    <div ng-repeat="item in pros">
+        <a class="item item-icon-right" ng-click="go(item)">
+            <h2>
+                <span class="ion-record {{statesStyles[item.state]}}"></span>
+                <span ng-bind="item.creator+': '+item.name"></span>
+            </h2>
+            <p style="margin-left:20px;"><span ng-bind="(item.createdDate|date:'MM月dd日 HH:mm:ss')"></span></p>
+            <i class="icon icon-accessory balanced ion-chevron-right"></i>
+        </a>
+    </div>
+</div>
+<ion-infinite-scroll
+        ng-if="flagMore"
+        on-infinite="loadMore()"
+        distance="1%">
+</ion-infinite-scroll>

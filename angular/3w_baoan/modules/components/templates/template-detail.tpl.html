@@ -1,0 +1,40 @@
+<label class="item item-input">
+    <span class="input-label" ng-bind="label"></span>
+    <button class="button button-icon balanced icon ion-plus-circled pull-left"
+            ng-if="!readonly" ng-click="openModal()"></button>
+</label>
+<div class="item" style="height: {{(output[input.id].length+1)*30}}px;margin-right: 30px;overflow-x: visible">
+    <div class="detail-rub"></div>
+    <ion-content direction="xy" style="padding: 0">
+        <table class="table" style="width: {{getWidth(input.details)}}">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th ng-if="flagEdit"></th>
+                <th ng-repeat="item in input.fields | orderBy:'index'" ng-bind="item.name"></th>
+                <th ng-if="!readonly"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="outputItem in output[input.id]">
+                <td ng-bind="$index+1"></td>
+                <th ng-if="!readonly" ng-click="openModal(outputItem,$index)">编辑</th>
+                <td ng-repeat="item in input.fields | orderBy:'index'" style="width: {{item.name.length*10}}px">
+                    <div ng-if="item.ctrl=='checkboxes'">{{outputItem[item.id]?outputItem[item.id]===true?'✅':
+                        outputItem[item.id]+'✅':''}}</div>
+                    <div ng-if="item.ctrl!='idmap'&&item.ctrl!='select'&&item.ctrl!='checkboxes'">{{outputItem[item.id]}}</div>
+                    <v-field ng-if="item.ctrl=='idmap'" input-id="{{outputItem[item.id]}}"
+                             output-field="{{item.config=='dictionary'?'t_value':'name'}}"
+                             output-src="{{item.config}}"></v-field>
+                    <v-field ng-if="item.ctrl=='select'" input-id="{{outputItem[item.id]}}"
+                             output-field="name"
+                             output-src="{{item.config}}"></v-field>
+                </td>
+                <td ng-if="!readonly" class="balanced-bg" style="color:#fff"
+                    ng-click="output[input.id].splice($index,1);remove()">
+                    <i class="ion-close"></i></td>
+            </tr>
+            </tbody>
+        </table>
+    </ion-content>
+</div>

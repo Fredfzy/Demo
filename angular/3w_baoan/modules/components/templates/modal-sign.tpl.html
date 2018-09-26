@@ -1,0 +1,11 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+        <h1 class="title">手写签名</h1>
+        <button class="button button-icon icon ion-ios-checkmark-outline" ng-click="doSign()"></button>
+    </ion-header-bar>
+    <ion-content scroll="false">
+        <button class="button absolute top-right" ng-click="doReset()">重写</button>
+        <div id="content{{contentId}}"><p style="text-align:center">Loading Canvas...</p></div>
+    </ion-content>
+</ion-modal-view>

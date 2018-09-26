@@ -1,0 +1,36 @@
+<ion-view>
+    <ion-header-bar class="bar-positive">
+        <a class="button button-icon icon ion-ios-arrow-left"
+           ng-click="back()"></a>
+        <h1 class="title">联系人</h1>
+        <button class="button button-icon icon ion-ios-plus-empty" ng-click="openModal()"></button>
+    </ion-header-bar>
+    <ion-content style="color:#444;background-color: #f2f2f2;">
+        <div ng-repeat="item in contacts" class="main-list"
+             style="height: 150px;margin: 0px 0px 10px;">
+            <div>
+                {{item.yhlxr}}
+            </div>
+            <span style="top: 10px;left: 65px;font-size: 18px;">
+                {{item.yhlxr}}
+            </span>
+            <span ng-click="openModal(item)"
+                  style="width: 50px;line-height: 40px;height: 40px;text-align: center;top: 0px;right: 0px;color: #33cc99;">
+                编辑
+            </span>
+            <span style="left: 65px;top: 70px;white-space: nowrap;max-width: 199px;text-overflow: ellipsis;overflow: hidden;height: 20px;color: #999;font-size: 13px;">
+                电话：{{item.yhdh}}
+            </span>
+            <span style="left: 65px;top: 45px;color: #999;font-size: 13px;">
+                职位：{{item.yhlxrzw}}
+            </span>
+            <span style="left: 65px;bottom: 35px;color: #999;font-size: 13px;">
+                邮箱：{{item.yhyx}}
+            </span>
+            <span style="color: #999;bottom: 10px;font-size: 13px;left: 65px;">
+                QQ/微信：{{item.yhqqwx}}
+        </span>
+        </div>
+        <div ng-if="!contacts" style="font-size: 16px;text-align: center;margin-top: 40%;">暂无数据</div>
+    </ion-content>
+</ion-view>

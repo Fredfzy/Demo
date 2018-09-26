@@ -1,0 +1,53 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+        <h1 class="title">表单域</h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" ng-model="search" placeholder="在此输入搜索内容">
+        </label>
+        <button class="button button-clear">
+            搜索
+        </button>
+    </div>
+    <ion-content class="has-subheader">
+        <div class="list">
+            <div ng-repeat="item in list|filter:search">
+                <div class="item item-icon-right" ng-click="doSelect(item)">
+                    <div>
+                        名称：
+                        <span>{{item.name}}</span>
+                    </div>
+                    <div>
+                        发起人：
+                        <span>{{item.creator}}</span>
+                    </div>
+                    <div>
+                        发起时间：
+                        <span>{{item.createdDate|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                    <div>
+                        状态：
+                        <span ng-if="item.state==1">审批中</span>
+                        <span ng-if="item.state==3">待重审</span>
+                        <span ng-if="item.state==2">已结束</span>
+                        <span ng-if="item.state==-1">被拒绝</span>
+                        <span ng-if="item.state==0">未提交</span>
+                        <span ng-if="item.state==-2">被撤回</span>
+                    </div>
+                    <i class="icon ion-checkmark-circled balanced" ng-if="item.flagSelected"></i>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll
+                ng-if="flagMore"
+                on-infinite="doPager()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-balanced" ng-click="doConfirm()">
+        <i class="title icon ion-android-done"></i>
+    </ion-footer-bar>
+</ion-modal-view>

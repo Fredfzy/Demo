@@ -1,0 +1,20 @@
+<ion-view view-title="{{detail.name}}">
+    <ion-header-bar class="bar-balanced">
+        <button class="button button-icon icon ion-ios-arrow-left" ng-click="back()"></button>
+        <h1 class="title">{{detail.name}}</h1>
+        <button class="button button-icon icon ion-ios-compose-outline" ng-click="openEdit()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="item-divider-slim" ng-repeat-start="item in keySet">
+            {{item.name}}
+        </div>
+        <div class="item item-text-wrap" ng-repeat-end>
+            {{detail[item.key]||'--'}}
+        </div>
+        <div style="padding: 10px;">
+            <button class="button button-block button-medium button-outline button-assertive" ng-click="openRemove()">
+                删除
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

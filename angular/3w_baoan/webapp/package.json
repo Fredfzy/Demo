@@ -1,0 +1,7 @@
+{
+  "name": "oa",
+  "main": "login.html",
+  "window":{
+  	"toolbar":false
+  }
+}

@@ -1,0 +1,19 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">请选择客户</h1>
+        <button class="button  button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content class="gray-bg">
+        <div class="loading" ng-if="!flagLoaded"></div>
+        <a class="item item-icon-right" ng-click="goDetail(item)" ng-repeat="item in list">
+            <h2>{{item.name}}</h2>
+            <p>{{item.industryName}}</p>
+            <i class="icon icon-accessory ion-chevron-right"></i>
+        </a>
+    </ion-content>
+    <ion-footer-bar class="item-input-inset">
+        <button class="button button-full button-balanced icon ion-android-done"
+                ng-click="create(formData)">
+        </button>
+    </ion-footer-bar>
+</ion-modal-view>
