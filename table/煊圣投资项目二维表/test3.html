@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title3</title>
+    <style>
+        table{
+            border-left: 1px solid #333;
+            border-top: 1px solid #333;
+            border-collapse: collapse;
+        }
+        table,td{
+            border-bottom:1px solid #333;
+            border-right: 1px solid #333;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+<table id="my-table">
+</table>
+</body>
+<script src="jquery-3.3.1.js"></script>
+<script>
+    $(function() {
+        //从后台接口拿到数据
+        function getJson() {
+            var mydata={};
+            $.ajax({
+                type: "GET",
+                url: "http://192.168.1.119:8080/oa/item/materialentryplan/1",
+                dataType: "json",
+                async:false,
+                success: function (data) {
+                    // console.log(data);
+                    mydata=data;
+                }
+            })
+            return mydata;
+        }
+        getJson();
+        var data=getJson();
+        console.log(data);
+        // 排序函数
+        function sortId(a, b) {
+            return a.index - b.index;
+        }
+        // 获取表头
+        var beamList = data.beamList;
+        // 获取详情表
+        var dataList = data.dataList;
+        var beamArr = [];//定义表头第一行
+        var beamArr1 = [];//定义表头第二行
+        beamList.sort(sortId);
+        dataList.sort(sortId);
+        // console.log(beamList);
+        //表头第一行
+        $(beamList).each(function (index, item) {
+            var beamObject = {};
+            beamObject.index = item.index;
+            $.each(item, function (key, value) {
+                if (key != "index") {
+                    beamObject.key = key;
+                    beamObject.value = value;
+                    if(key =="cptxmc" || key =="fa" || key =="pp"){
+                        beamObject.colspan=1;
+                    }
+                    else if(key=="jzrq"){
+                        beamObject.colspan=7
+                    }
+                    else{
+                        beamObject.colspan=2;
+                    }
+                }
+            })
+            beamArr.push(beamObject);
+        })
+        console.log(beamArr);
+        beamArr.sort(sortId);
+        // 表头第二行
+        var index=0;//第二行元素排序序号
+        $(beamArr).each(function (i,item) {
+            if(item.colspan==1){
+                var beamObject={};
+                index ++;
+                beamObject.parentKey=item.key;
+                if(item.key=="pp"){
+                    beamObject.key="";
+                    beamObject.value="名称单位";
+                    beamObject.index=index;
+                }
+                else{
+                    beamObject.key=item.key;
+                    beamObject.value="";
+                    beamObject.index=index;
+                }
+                beamArr1.push(beamObject);
+            }
+            else if(item.key=="jzrq"){
+                index++;
+                var beamObject1={};
+                beamObject1.parentKey=item.key;
+                beamObject1.key="wcd";
+                beamObject1.value="1#";
+                beamObject1.index=index;
+                beamArr1.push(beamObject1);
+                index++;
+                var beamObject2={};
+                beamObject2.parentKey=item.key;
+                beamObject2.key="wcd";
+                beamObject2.value="2#";
+                beamObject2.index=index;
+                beamArr1.push(beamObject2);
+                index++;
+                var beamObject3={};
+                beamObject3.parentKey=item.key;
+                beamObject3.key="wcd";
+                beamObject3.value="3#";
+                beamObject3.index=index;
+                beamArr1.push(beamObject3);
+                index++;
+                var beamObject4={};
+                beamObject4.parentKey=item.key;
+                beamObject4.key="wcd";
+                beamObject4.value="4#";
+                beamObject4.index=index;
+                beamArr1.push(beamObject4);
+                index++;
+                var beamObject5={};
+                beamObject5.parentKey=item.key;
+                beamObject5.key="wcd";
+                beamObject5.value="5#";
+                beamObject5.index=index;
+                beamArr1.push(beamObject5);
+                index++;
+                var beamObject6={};
+                beamObject6.parentKey=item.key;
+                beamObject6.key="wcd";
+                beamObject6.value="6#";
+                beamObject6.index=index;
+                beamArr1.push(beamObject6);
+                index++;
+                var beamObject7={};
+                beamObject7.parentKey=item.key;
+                beamObject7.key="hj2";
+                beamObject7.value="合计";
+                beamObject7.index=index;
+                beamArr1.push(beamObject7);
+            }
+            else{
+                if(item.key=="cp"){
+                    index++;
+                    var beamObject={};
+                    beamObject.parentKey=item.key;
+                    beamObject.key="bz";
+                    beamObject.value="包装";
+                    beamObject.index=index;
+                    beamArr1.push(beamObject);
+                    index++;
+                    var beamObject1={};
+                    beamObject1.parentKey=item.key;
+                    beamObject1.key="dh";
+                    beamObject1.value="用量";
+                    beamObject1.index=index;
+                    beamArr1.push(beamObject1);
+                }
+                else{
+                    index++;
+                    var beamObject={};
+                    beamObject.parentKey=item.key;
+                    beamObject.key="gcl";
+                    beamObject.value="工程量";
+                    beamObject.index=index;
+                    beamArr1.push(beamObject);
+                    index++;
+                    var beamObject1={};
+                    beamObject1.parentKey=item.key;
+                    beamObject1.key="xj";
+                    beamObject1.value="小计";
+                    beamObject1.index=index;
+                    beamArr1.push(beamObject1);
+                }
+            }
+        });
+        beamArr1.sort(sortId);
+        // console.log(beamArr);
+        console.log(beamArr1);
+
+        // 写入第一行
+        var tabletr = "<tr>"
+        $(beamArr).each(function (index, item) {
+            if(item.colspan==2){
+                // tabletr += '<td ' + (item.colspan > 1 ? 'colspan="2"' : '') + '> ' + item.value + "</td>"
+                tabletr += '<td ' + ( 'colspan="2"' ) + '> ' + item.value + "</td>";
+            }
+            else if(item.colspan==7){
+                tabletr += '<td ' + ( 'colspan="7"' ) + '> ' + item.value + "</td>";
+            }
+            else{
+                tabletr += '<td> ' + item.value + '</td>'
+            }
+        })
+        tabletr += "</tr>";
+        // 写入第二行
+        tabletr += "<tr>";
+        $(beamArr1).each(function (index,item) {
+            tabletr+="<td>"+item.value+"</td>";
+        });
+        tabletr += "</tr>";
+        //
+        //
+        //
+        // 表内容
+        var tableContent=[];
+        var tableContent1=[];
+        console.log(dataList);
+        $(dataList).each(function (index,item) {
+            var obj1={};
+            var obj2={};
+            $.each(item,function (onekey,onevalue) {
+                var colnum_1 =0;
+                if(onekey=="cptxmc"){
+                    $(beamArr1).each(function (index,item) {
+                        if(item.key=="cptxmc"){
+                            obj1.index=item.index;
+                            obj1.parentKey=item.parentKey;
+                            obj1.key=item.parentKey;
+                        }
+                    });
+                    obj1.name=onevalue;
+                    obj1.line=item.line;
+                }
+                // console.log(obj1);
+                // 第二列
+                if(onekey=="fa"){
+                    $(onevalue).each(function (index,itemFa) {
+                        $.each(itemFa,function (faKey,faValue) {
+                            var colnum_2 = 0;
+                            if(faKey=="fa"){
+                                $(beamArr1).each(function (index,item) {
+                                    if(item.parentKey=="fa"){
+                                        obj2.index=item.index;
+                                        obj2.parentKey=item.parentKey;
+                                        obj2.key=item.parentKey;
+                                    }
+                                });
+                                obj2.name=faValue;
+                                obj2.line=itemFa.line;
+                            }
+                            //后面的列
+                            if(faKey=="detail"){
+                                $(faValue).each(function (index,itemThird) {
+                                    $(beamArr).each(function (index,item) {
+                                        if(item.key!="cptxmc" && item.key!="fa" && item.key!="pp" && item.key!="cp" && item.key!="jzrq"){
+                                            var exsitNum = 0;
+                                            $.each(itemThird,function (keyThird,valueThird) {
+                                                if(keyThird==item.key){
+                                                    exsitNum++;
+                                                }
+                                            });
+                                            if(exsitNum==0){
+                                                var addObjStr = '{"' + item.key + '":[{"gcl":0,"index":1},{"xj":0,"index":2}]}';
+                                                var addObj = JSON.parse(addObjStr);
+                                                itemThird[item.key] = addObj[item.key];
+                                            }
+                                        }
+                                    });
+                                    var rowContent = [];
+                                    $.each(itemThird,function (keyThird,valueThird) {
+                                        if(keyThird=="pp"){
+                                           var cellContent={};
+                                           $(beamArr1).each(function (index,item) {
+                                               if(item.parentKey=="pp"){
+                                                   cellContent.index=item.index;
+                                                   cellContent.parentKey=item.parentKey;
+                                                   cellContent.key=item.parentKey;
+                                               }
+                                           });
+                                            cellContent.name=valueThird;
+                                            cellContent.line=1;
+                                           rowContent.push(cellContent);
+                                        }
+                                        else{
+                                            // console.log(valueThird);
+                                            if (keyThird != 'bz' && keyThird != 'dh' && keyThird !='detail1' && keyThird !='detail2') {//这两个数据是后台返回多传了的，所以把过滤掉
+                                                $(beamArr1).each(function (index, item) {
+                                                    $(valueThird).each(function (index, itemFour) {
+                                                        $.each(itemFour, function (keyFour, valueFour) {//从原始数据遍历第四层级对象
+                                                            //上面第二行的parentcode和code就是在这里使用的，目的是为了能和原始数据对应上找到需要写入的数据
+                                                            if (keyFour == item.key && keyThird==item.parentKey ) {
+                                                                var cellContent = {};//定义单元格
+                                                                cellContent.index = item.index;
+                                                                cellContent.parentKey = item.parentKey;
+                                                                cellContent.key = item.key;
+                                                                cellContent.name = valueFour;
+                                                                cellContent.line = 1;//此类单元格都只占一行
+                                                                //todo 单元格放到行内
+                                                                rowContent.push(cellContent);
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            }
+                                        }
+                                    });
+                                    if(colnum_1>0){
+                                        obj1.line=0;
+                                    }
+                                    if (colnum_2>0){
+                                        obj2.line=0;
+                                    }
+                                    rowContent.push(obj1);
+                                    rowContent.push(obj2);
+                                    var rowc = JSON.parse(JSON.stringify(rowContent));
+                                    tableContent.push(rowc);
+                                    colnum_1++;//第一列的行index++
+                                    colnum_2++;//第二列的行index++
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+        //获取批次数据
+        var detail1=dataList
+        console.log(tableContent);
+        //导入数据
+        $(tableContent).each(function (i, row) {//遍历处理好的表内容数据，取出每行的数据
+            tabletr += '<tr>';
+            row.sort(sortId);//将每行的数据按照处理好的index排序
+            $(row).each(function (k, cell) {//循环这一行的每一个单元格数据
+                //当单元格的line>1说明是需要合并单元格的行数的
+                if (cell.line > 1) {
+                    tabletr += '<td rowspan=' + cell.line + '>' + cell.name + '</td>';
+                } else if (cell.line == 1) {//当line=1的时候说明这一个格子是需要显示，但是不需要合并的
+                    tabletr += '<td>' + cell.name + '</td>';
+                } else {
+                    //以上条件都不满足说明line=0 ，这个格子是被合并的格子，不需要写任何东西
+                }
+
+            });
+            tabletr += '</tr>';
+        });
+
+        $("#my-table").html(tabletr);
+    })
+</script>
+</html>

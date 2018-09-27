@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            border-left: 1px solid #333;
+            border-top: 1px solid #333;
+            border-collapse: collapse;
+        }
+        table,td{
+            border-bottom:1px solid #333;
+            border-right: 1px solid #333;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <table id="my-table">
+
+    </table>
+</body>
+<script src="jquery-3.3.1.js"></script>
+<!--接口地址-->
+<!--192.168.1.119:8080/oa/item/approvedtools/1-->
+<script>
+    $(function() {
+        //从后台接口拿到数据
+        function getJson() {
+            var mydata={};
+            $.ajax({
+                type: "GET",
+                url: "http://192.168.1.119:8080/oa/item/approvedtools/1",
+                dataType: "json",
+                async:false,
+                success: function (data) {
+                    console.log(data);
+                    mydata=data;
+                }
+            })
+            return mydata;
+        }
+
+        var data=getJson();
+        // var jsonStr = '{"gjFaList":[{"mc":"抹灰刀","xh":"批腻子用","sl":100.00,"bz":"把","index":1},{"mc":"铲刀","xh":"批腻子用","sl":100.00,"bz":"把","index":2},{"mc":"长毛滚筒","xh":"平涂面涂","sl":150.00,"bz":"把","index":3},{"mc":"短毛","xh":"底涂","sl":100.00,"bz":"把\\r\\n","index":4},{"mc":"砂架","xh":"腻子打磨","sl":100.00,"bz":"把","index":5},{"mc":"砂纸180","xh":"腻子打磨","sl":500.00,"bz":"张","index":6},{"mc":"砂带","xh":"腻子打磨","sl":1.00,"bz":"卷","index":7},{"mc":"拇指小滚筒","xh":"水管等特殊位置","sl":100.00,"bz":"把","index":8}],"respMsg":"成功","respCode":1,"beamList":[{"gjmc":"工具名称","index":1},{"index":2,"ggsm":"规格/说明"},{"index":3,"xqsl":"需求数量"},{"bz":"备注","index":4}]}';
+        // var data = JSON.parse(jsonStr);
+        function sortId(a, b) {
+            return a.index - b.index;
+        }
+        var beamList = data.beamList;
+        var gjFaList = data.gjFaList;
+        var beamArr = [];
+        beamList.sort(sortId);
+        gjFaList.sort(sortId);
+        // console.log(beamList);
+        $(beamList).each(function (index, item) {
+            var beamObject = {};
+            beamObject.index = item.index;
+            $.each(item, function (key, value) {
+                if (key != "index") {
+                    beamObject.key = key;
+                    beamObject.value = value;
+                }
+            })
+            beamArr.push(beamObject);
+        })
+        beamArr.sort(sortId);
+        var tabletr = "<tr>"
+        $(beamArr).each(function (index, item) {
+            tabletr += "<td>" + item.value + "</td>"
+        })
+        tabletr += "</tr>";
+        $(gjFaList).each(function (index, item) {
+            tabletr += '<tr>';
+            tabletr += "<td>" + item.mc + "</td>" + "<td>" + item.xh + "</td>" + "<td>" + item.sl + "</td>" + "<td>" + item.bz + "</td>"
+            tabletr += "</tr>";
+        })
+        $("#my-table").html(tabletr);
+    })
+
+</script>
+</html>

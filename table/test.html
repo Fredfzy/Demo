@@ -1,0 +1,340 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head>
+	<script src="jquery-3.3.1.js"></script>
+	<script>
+		var jsonStr = '{"dataList":[{"cptxmc":"弹性涂料","line":4,"fa":[{"fa":"土黄色质感涂料","line":4,"detail":[{"pp":"亚士御彩石专用底漆","bz":18,"dh":0.6,"cp":[{"bz":18,"index":1},{"dh":0.6,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":2974.64,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":18.03,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":3591.92,"index":2}]},{"pp":"AC罩面（有光）","bz":30,"dh":1.8,"cp":[{"bz":30,"index":1},{"dh":1.8,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":1784.83,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":10.86,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":2155.19,"index":2}]},{"pp":"亚士花岗岩纹理真石漆（面）","bz":22,"dh":2.8,"cp":[{"bz":22,"index":1},{"dh":2.8,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":2433.9,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":14.85,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":2938.95,"index":2}]},{"pp":"聂子(粗灰)","bz":19,"dh":0.3,"cp":[{"bz":19,"index":1},{"dh":0.3,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":2818.07,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":17.07,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":3402.86,"index":2}]}]}]},{"cptxmc":"质感涂料","line":9,"fa":[{"fa":"咖啡色质感涂料","line":6,"detail":[{"pp":"聂子(粗灰)","bz":30,"dh":2.3,"cp":[{"bz":30,"index":1},{"dh":2.3,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":178.24,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":5.29,"index":2}]},{"pp":"亚士有色专用底漆","bz":25,"dh":3,"cp":[{"bz":25,"index":1},{"dh":3,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":213.92,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":6.38,"index":2}]},{"pp":"描缝漆","bz":26,"dh":4,"cp":[{"bz":26,"index":1},{"dh":4,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":205.73,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":6.17,"index":2}]},{"pp":"柔性质感涂料","bz":24,"dh":1,"cp":[{"bz":24,"index":1},{"dh":1,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":222.75,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":6.56,"index":2}]},{"pp":"亚士第二代沙壁状罩面漆","bz":43,"dh":0.3,"cp":[{"bz":43,"index":1},{"dh":0.3,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":124.31,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":3.65,"index":2}]},{"pp":"亚士花岗岩纹理真石漆（底）","bz":16,"dh":2.1,"cp":[{"bz":16,"index":1},{"dh":2.1,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":334.19,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":9.91,"index":2}]}]},{"fa":"米黄色质感涂料","line":3,"detail":[{"pp":"亚士御彩石平面中涂","bz":18,"dh":1.4,"cp":[{"bz":18,"index":1},{"dh":1.4,"index":2}],"1#":[{"gcl":15165.36,"index":1},{"xj":842.6,"index":2}],"2#":[{"gcl":535.15,"index":1},{"xj":29.81,"index":2}],"3#":[{"gcl":1545.5,"index":1},{"xj":85.94,"index":2}]},{"pp":"亚士御彩石主材涂料-ZL型","bz":26,"dh":4.1,"cp":[{"bz":26,"index":1},{"dh":4.1,"index":2}],"1#":[{"gcl":15165.36,"index":1},{"xj":583.44,"index":2}],"2#":[{"gcl":535.15,"index":1},{"xj":20.74,"index":2}],"3#":[{"gcl":1545.5,"index":1},{"xj":59.6,"index":2}]},{"pp":"亚士有色专用底漆","bz":24,"dh":0.9,"cp":[{"bz":24,"index":1},{"dh":0.9,"index":2}],"1#":[{"gcl":15165.36,"index":1},{"xj":631.93,"index":2}],"2#":[{"gcl":535.15,"index":1},{"xj":22.34,"index":2}],"3#":[{"gcl":1545.5,"index":1},{"xj":64.43,"index":2}]}]}]}],"respMsg":"成功","respCode":1,"beamList":[{"cptxmc":"产品体系名称","index":1},{"index":2,"fa":"方案"},{"index":4,"cp":"产品"},{"1#":"1#","index":5},{"2#":"2#","index":6},{"3#":"3#","index":7},{"index":8,"4#":"4#"},{"index":9,"5#":"5#"},{"index":10,"6#":"6#"},{"pp":"体系构成","index":3}]}';
+		// var jsonStr='{"respMsg":"成功","ldList":["1#","2#","3#","4#","5#","6#"],"respCode":1,"beamList":[{"cptxmc":"产品体系名称","index":1},{"index":2,"fa":"方案"},{"pp":"体系构成","index":3},{"index":4,"cp":"产品"},{"1#":"1#","index":5},{"2#":"2#","index":6},{"3#":"3#","index":7},{"index":8,"4#":"4#"},{"index":9,"5#":"5#"},{"index":10,"6#":"6#"}],"dataList":[{"cptxmc":"弹性涂料","line":4,"fa":[{"fa":"土黄色质感涂料","line":4,"detail":[{"pp":"亚士御彩石专用底漆","bz":18,"dh":0.6,"cp":[{"bz":18,"index":1},{"dh":0.6,"index":2}],"1#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":2974.64,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":18.03,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":3591.92,"index":2}]},{"pp":"AC罩面（有光）","bz":30,"dh":1.8,"cp":[{"bz":30,"index":1},{"dh":1.8,"index":2}],"1#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":1784.83,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":10.86,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":2155.19,"index":2}]},{"pp":"亚士花岗岩纹理真石漆（面）","bz":22,"dh":2.8,"cp":[{"bz":22,"index":1},{"dh":2.8,"index":2}],"1#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":2433.9,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":14.85,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":2938.95,"index":2}]},{"pp":"聂子(粗灰)","bz":19,"dh":0.3,"cp":[{"bz":19,"index":1},{"dh":0.3,"index":2}],"1#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":53543,"index":1},{"xj":2818.07,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":324,"index":1},{"xj":17.07,"index":2}],"6#":[{"gcl":64654,"index":1},{"xj":3402.86,"index":2}]}]}]},{"cptxmc":"质感涂料","line":9,"fa":[{"fa":"咖啡色质感涂料","line":6,"detail":[{"pp":"聂子(粗灰)","bz":30,"dh":2.3,"cp":[{"bz":30,"index":1},{"dh":2.3,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":178.24,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":5.29,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"亚士有色专用底漆","bz":25,"dh":3,"cp":[{"bz":25,"index":1},{"dh":3,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":213.92,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":6.38,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"描缝漆","bz":26,"dh":4,"cp":[{"bz":26,"index":1},{"dh":4,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":205.73,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":6.17,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"柔性质感涂料","bz":24,"dh":1,"cp":[{"bz":24,"index":1},{"dh":1,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":222.75,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":6.56,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"亚士第二代沙壁状罩面漆","bz":43,"dh":0.3,"cp":[{"bz":43,"index":1},{"dh":0.3,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":124.31,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":3.65,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"亚士花岗岩纹理真石漆（底）","bz":16,"dh":2.1,"cp":[{"bz":16,"index":1},{"dh":2.1,"index":2}],"1#":[{"gcl":5345,"index":1},{"xj":334.19,"index":2}],"2#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"3#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"4#":[{"gcl":156.51,"index":1},{"xj":9.91,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]}]},{"fa":"米黄色质感涂料","line":3,"detail":[{"pp":"亚士御彩石平面中涂","bz":18,"dh":1.4,"cp":[{"bz":18,"index":1},{"dh":1.4,"index":2}],"1#":[{"gcl":15165.36,"index":1},{"xj":842.6,"index":2}],"2#":[{"gcl":535.15,"index":1},{"xj":29.81,"index":2}],"3#":[{"gcl":1545.5,"index":1},{"xj":85.94,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"亚士御彩石主材涂料-ZL型","bz":26,"dh":4.1,"cp":[{"bz":26,"index":1},{"dh":4.1,"index":2}],"1#":[{"gcl":15165.36,"index":1},{"xj":583.44,"index":2}],"2#":[{"gcl":535.15,"index":1},{"xj":20.74,"index":2}],"3#":[{"gcl":1545.5,"index":1},{"xj":59.6,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]},{"pp":"亚士有色专用底漆","bz":24,"dh":0.9,"cp":[{"bz":24,"index":1},{"dh":0.9,"index":2}],"1#":[{"gcl":15165.36,"index":1},{"xj":631.93,"index":2}],"2#":[{"gcl":535.15,"index":1},{"xj":22.34,"index":2}],"3#":[{"gcl":1545.5,"index":1},{"xj":64.43,"index":2}],"4#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"5#":[{"gcl":0,"index":1},{"xj":0,"index":2}],"6#":[{"gcl":0,"index":1},{"xj":0,"index":2}]}]}]}]}'
+	</script>
+	<style>
+		table{
+			border-left: 1px solid #333;
+			border-top: 1px solid #333;
+			border-collapse: collapse;
+		}
+		table,td{
+			    border-bottom:1px solid #333;
+			    border-right: 1px solid #333;
+			    text-align:center;
+			 }
+	</style>
+</head>
+<body>
+	<table id="tb">
+
+	</table>
+</body>
+
+
+<script>
+    $(function() {
+//         //从后台接口拿到数据
+//         function getJson() {
+//             var mydata = {};
+//             $.ajax({
+//                 type: "GET",
+//                 url: "http://192.168.1.119:8080/oa/item/materialBudgetInfo2/1",
+//                 dataType: "json",
+//                 async: false,
+//                 success: function (data) {
+//                     console.log(data);
+//                     mydata = data;
+//                 }
+//             })
+//             return mydata;
+//         }
+
+//         // getJson();
+//         var data = getJson();
+
+// //排序函数
+//         function sortId(a, b) {
+//             return a.index - b.index
+//         }
+
+//json转对象
+        var data = JSON.parse(jsonStr);
+        console.log(data);
+//获取表头信息
+        var titleList = data.beamList;
+//获取表明细信息
+        var dataList = data.dataList;
+
+        /****表头处理*****************************************/
+
+        var titleMap_1 = [];//定义表头第一行
+        var titleMap_2 = [];//定义表头第二行
+
+        var titleList = data.beamList;//获取原始表头数据
+        titleList.sort(sortId);//按照index字段排序
+
+//进行表头第一行处理
+        $(titleList).each(function (i, item) {//遍历表头元素写表头
+            var title_1 = new Object();//新建表头第一行对象
+            title_1.index = item.index;//写入元素排序
+            $.each(item, function (k, v) {
+                if (k != 'index') {//排除index字段，将剩下的一个字段赋值给表头元素
+                    title_1.code = k;//将元素key作为表头第一行对应元素的code字段值
+                    title_1.name = v;//将value作为表头第一行对应元素的name值
+                    if (k != 'cptxmc' && k != 'fa' && k != 'pp') {//出现这几个字段就表示该单元格需要占2格
+                        title_1.colspan = 2
+                    } else {
+                        title_1.colspan = 1
+                    }
+                }
+            });
+            titleMap_1.push(title_1);//将处理好的表头元素写入表头第一行
+        });
+
+        titleMap_1.sort(sortId);//排序
+
+//进行表头第二行处理
+        var order = 0; //定义一个序号，为了给表头第二行的元素写入排序序号
+        $(titleMap_1).each(function (i, item) {//循环第一行处理高的元素
+            if (item.colspan == 1) {//如果该元素只占一格，说明是前3列的元素，排序就只加1
+                order++;//排序加1
+                var title_2 = new Object();//定义表头第二行的元素
+                title_2.parentCode = item.code;//表头第二行的父项code就是表头第一行的code
+                //第二行的前两个是没有值的，第三个元素 pp 的值是 “单位名称”，初始化好
+                if (item.code == 'pp') {
+                    title_2.code = '';
+                    title_2.name = '名称单位';
+                    title_2.index = order;
+                } else {
+                    title_2.code = item.code;
+                    title_2.name = '';
+                    title_2.index = order;
+                }
+                titleMap_2.push(title_2);
+            } else {//如果该元素占2行，说明是从第四列开始的元素，表头第二行就对应会有2个元素，排序分别加1
+                if (item.code == 'cp') {//cp表示产品，内含包装，用量2个元素，分别初始化好
+                    order++;
+                    var title_2_1 = new Object();
+                    title_2_1.parentCode = item.code;
+                    title_2_1.code = 'bz';
+                    title_2_1.name = '包装';
+                    title_2_1.index = order;
+                    titleMap_2.push(title_2_1);
+                    order++;
+                    var title_2_2 = new Object();
+                    title_2_2.parentCode = item.code;
+                    title_2_2.code = 'dh';
+                    title_2_2.name = '用量';
+                    title_2_2.index = order;
+                    titleMap_2.push(title_2_2);
+                } else {//其他表示楼号  如 1# 2#。。。。。， 对应有两个元素，，工程量和小计 ，分别初始化好
+                    order++;
+                    var title_2_1 = new Object();
+                    title_2_1.parentCode = item.code;
+                    title_2_1.code = 'gcl';
+                    title_2_1.name = '工程量';
+                    title_2_1.index = order;
+                    titleMap_2.push(title_2_1);
+                    order++;
+                    var title_2_2 = new Object();
+                    title_2_2.parentCode = item.code;
+                    title_2_2.code = 'xj';
+                    title_2_2.name = '小计';
+                    title_2_2.index = order;
+                    titleMap_2.push(title_2_2);
+                }
+            }
+        });
+        titleMap_2.sort(sortId);//排序
+
+//表头处理完毕后进行table的写入，写表头   
+        var tableHtml = '';
+//写第一行
+        tableHtml = '<tr>';
+        $(titleMap_1).each(function (i, item) {
+            //如果对象的colspan值>1的话说明该元素占2格，需要合并单元格
+            tableHtml += '<td ' + (item.colspan > 1 ? 'colspan="2"' : '') + '> ' + item.name + ' </td>';
+        });
+        tableHtml += '</tr>';
+        console.log(titleMap_2);
+//写第二行，第二行没有需要合并单元格的，直接写入
+        tableHtml += '<tr>';
+        $(titleMap_2).each(function (i, item) {
+            tableHtml += '<td > ' + item.name + ' </td>';
+        });
+        tableHtml += '</tr>';
+
+
+        /****表内容处理*****************************************/
+        console.log(dataList);
+        var tableContent = []//定义表格内容，为了写入table数据做准备
+        $(dataList).each(function (i, item) {//遍历获取到的原始数据
+            var cellContent_1 = new Object();//定义单元格
+            var cellContent_2 = new Object();//定义单元格
+            $.each(item, function (firstLevelKey, firstLevelObj) {//从原始数据遍历第一层级对象
+                //处理第一列
+                var colnum_1 = 0;//定义第一列的遍历index
+                if (firstLevelKey == 'cptxmc') {//第一列对应cptxmc字段，只有出现该字段才做判断
+                    $(titleMap_2).each(function (j, title) {//循环表头二，主要为了写入index parentCode code等值
+                        if (title.parentCode == 'cptxmc') {
+                            cellContent_1.index = title.index;
+                            cellContent_1.parentCode = title.parentCode;
+                            cellContent_1.code = title.parentCode;
+                        }
+                    });
+                    cellContent_1.name = firstLevelObj;//单元格内容
+                    cellContent_1.line = item.line;//该单元格占几行
+
+                }
+                //处理第二列
+                if (firstLevelKey == 'fa') {//第二列对应fa字段，只有出现该字段才做判断
+                    $(firstLevelObj).each(function (n, secondLevel) {//遍历fa列表
+                        $.each(secondLevel, function (secondLevelKey, secondLevelObj) {//从原始数据遍历第二层级对象
+                            var colnum_2 = 0;//定义第二列每个不同种类的遍历index
+                            if (secondLevelKey == 'fa') {
+                                $(titleMap_2).each(function (j, title) {
+                                    if (title.parentCode == 'fa') {
+                                        cellContent_2.index = title.index;
+                                        cellContent_2.parentCode = title.parentCode;
+                                        cellContent_2.code = title.parentCode;
+                                    }
+                                });
+                                cellContent_2.name = secondLevelObj;
+                                cellContent_2.line = secondLevel.line;
+                                //todo 单元格放到行内
+                                //tableContent.push(cellContent);
+                            }
+                            //处理后面的列
+                            if (secondLevelKey == 'detail') {
+                                $(secondLevelObj).each(function (m, thirdLevel) {
+                                    //遍历三层对象之前，要知道三层对象缺少哪些列
+                                    $(titleMap_1).each(function (j, title) {
+                                        //这里循环的是表头的第一行，目的是为了找出当前数据缺少的楼栋信息（1# 2#这些）
+                                        //将下面字段排除掉，不做判断只判断楼栋的
+                                        if (title.code != 'cptxmc' && title.code != 'fa' && title.code != 'pp' && title.code != 'cp') {
+                                            var exsitNum = 0;//是否存在的初始值
+                                            $.each(thirdLevel, function (thirdLevelKey, thirdLevelObj) {
+                                                //console.log(thirdLevelKey +':'+title.code);
+                                                if (thirdLevelKey == title.code) {
+                                                    exsitNum++;//如果表头的楼栋出现过，+1
+                                                }
+                                            });
+                                            if (exsitNum == 0) {//表头楼栋元素在该数据中未出现过，如果写入一个对应楼栋的空数据，为了后面数据处理方便
+                                                var addObjStr = '{"' + title.code + '":[{"gcl":0,"index":1},{"xj":0,"index":2}]}';
+                                                var addObj = JSON.parse(addObjStr);
+                                                thirdLevel[title.code] = addObj[title.code];
+
+                                            }
+                                        }
+                                    });
+                                    //定义一个行内容，开始写行数据
+                                    var rowContent = [];
+
+
+                                    $.each(thirdLevel, function (thirdLevelKey, thirdLevelObj) {//从原始数据遍历第三层级对象
+                                        //处理第三格
+                                        if (thirdLevelKey == 'pp') {//产品名称
+                                            var cellContent = new Object();//定义单元格
+                                            $(titleMap_2).each(function (j, title) {
+                                                if (title.parentCode == 'pp') {
+                                                    cellContent.index = title.index;
+                                                    cellContent.parentCode = title.parentCode;
+                                                    cellContent.code = title.parentCode;
+                                                }
+                                            });
+                                            cellContent.name = thirdLevelObj;
+                                            cellContent.line = 1;//此类单元格都只占一行
+                                            //将单元格放入行中
+                                            rowContent.push(cellContent);
+
+                                        } else {
+                                            //处理三格之后的
+                                            if (thirdLevelKey != 'bz' && thirdLevelKey != 'dh') {//这两个数据是后台返回多传了的，所以把过滤掉
+                                                $(titleMap_2).each(function (j, title) {
+                                                    $(thirdLevelObj).each(function (n, fourthLevel) {
+
+                                                        $.each(fourthLevel, function (fourthLevelKey, fourthLevelLevelObj) {//从原始数据遍历第四层级对象
+                                                            //上面第二行的parentcode和code就是在这里使用的，目的是为了能和原始数据对应上找到需要写入的数据
+                                                            if (fourthLevelKey == title.code && thirdLevelKey == title.parentCode) {
+                                                                var cellContent = new Object();//定义单元格
+                                                                cellContent.index = title.index;
+                                                                cellContent.parentCode = title.parentCode;
+                                                                cellContent.code = title.code;
+                                                                cellContent.name = fourthLevelLevelObj;
+                                                                cellContent.line = 1;//此类单元格都只占一行
+                                                                //todo 单元格放到行内
+                                                                rowContent.push(cellContent);
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            }
+                                        }
+                                    });
+                                    //第一列的遍历index，当colnum_1=0的时候说明是第一列第一个分类的第一行，此时这个单元格是需要合并行的
+                                    //当colnum_1 > 0 的时候说明这个单元格是被上面的单元格合并的，不应该存在的
+                                    if (colnum_1 > 0) {
+                                        cellContent_1.line = 0;
+                                    }
+                                    //第二列的合并判断，原理同上
+                                    if (colnum_2 > 0) {
+                                        cellContent_2.line = 0;
+                                    }
+                                    //将第一列单元格数据写入行
+                                    rowContent.push(cellContent_1);
+                                    //将第二列单元格数据写入行
+                                    rowContent.push(cellContent_2);
+                                    //将行数据转为json字符串，再转换对象，如果不这样做，行数据会重复，不知道为什么，没找到原因
+                                    var rowc = JSON.parse(JSON.stringify(rowContent));
+                                    //将行数据写入表对象
+                                    tableContent.push(rowc);
+                                    colnum_1++;//第一列的行index++
+                                    colnum_2++;//第二列的行index++
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+        console.log(tableContent);
+
+
+//表内容数据处理完毕，开始向table里写入表数据
+        $(tableContent).each(function (i, row) {//遍历处理好的表内容数据，取出每行的数据
+            tableHtml += '<tr>';
+            row.sort(sortId);//将每行的数据按照处理好的index排序
+            $(row).each(function (k, cell) {//循环这一行的每一个单元格数据
+                //当单元格的line>1说明是需要合并单元格的行数的
+                if (cell.line > 1) {
+                    tableHtml += '<td rowspan=' + cell.line + '>' + cell.name + '</td>';
+                } else if (cell.line == 1) {//当line=1的时候说明这一个格子是需要显示，但是不需要合并的
+                    tableHtml += '<td>' + cell.name + '</td>';
+                } else {
+                    //以上条件都不满足说明line=0 ，这个格子是被合并的格子，不需要写任何东西
+                }
+
+            });
+            tableHtml += '</tr>';
+        });
+
+//将处理好的html字符串写入表格
+        $('#tb').html(tableHtml);
+    })
+
+//结束
+//里面有些逻辑可以拿出来封装一下重复利用的，时间关系我没有做，可以考虑做一下
+//比如:
+// var cellContent = new Object();//定义单元格
+// $(titleMap_2).each(function(j,title){
+// 	if (title.parentCode == 'pp') {
+// 		cellContent.index = title.index;
+// 		cellContent.parentCode =  title.parentCode;
+// 		cellContent.code =  title.parentCode;
+// 	} 
+// });
+// cellContent.name = thirdLevelObj;
+// cellContent.line = 1;//此类单元格都只占一行
+//多次出现，可以考虑封装
+
+//另外就是，这种返回的数据结构，处理起来太麻烦了，
+//还有一个简单的方式，但是需要将获取的原始数据结构调整一下
+//直接返回的就是每一行的东西，直接在后台处理好，前端直接判断需不需要合并单元格就好了
+
+</script>
+</html>
