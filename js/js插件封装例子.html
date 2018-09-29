@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style type="text/css">
+        #demo-1,#demo-2{width: 200px;height: 200px;border: 1px solid #ddd;}
+    </style>
+</head>
+<body>
+<h3>点击add可以添加个自input的内容到div里并实现变颜色</h3>
+<!--组件实例1-->
+<div id="demo-1">
+    <input  type="" name="" id="" value="好的" />
+    <button id="add-1">add</button>
+</div>
+<br />    <br />
+<!--组件实例2-->
+<div id="demo-2">
+    <input  type="" name="" id="" value="11" />
+    <button id="add-2">add</button>
+</div>
+<script type="text/javascript">
+    //这里是插件的代码；我为了方便都写到一个html中了；请把这个script标签中的内容单独写在一个js文件里
+    //整个插件写在一个立即执行函数里；就是function(){}();函数自执行；保证里面的变量不会与外界互相影响
+    //头部的win啊,doc啊 $  啊都是底部的window,document,jQuery的映射；方便内部直接调用；
+    //当然你不引用jq的话头部的$和底部的jQuery干掉；你若引用了更过的依赖可以依次添加；
+    //最后面的undefined可不写；最好写了；保证里面再出现的undefined是未定义的意思；不被其他东西赋值；
+    //好了下面是时候展现真正的技术了
+    //function前的!号(叹号)或者;(分号)这不是写错了,为了防止那个二货写的js结束没有分号；而可能发生报错
+    /*
+    ;function(win,doc,$,undefined){
+
+   }(window,document,jQuery)
+
+   或者写在一个闭包里(function(){
+
+   　　　　　　　　　　}())
+
+     */
+    (function(win,doc,undefined){
+        //我们随便写一个插件吧 比如你要点击按钮  添加input的值到 div里
+        var addHtml  = function(demo,btn){//插件名，调用的时候直接new一下插件名就行了并传参数或者传对象(一般这个函数名手写字母大写比较好，构造函数嘛，其实也是函数)
+            //很明显我要传id名；这里传什么都可以的其实；
+            this.div = doc.getElementById(demo);//为什么把获取的id传给this.div呢？this的指向为调用的实例；我们此时姑且认为this就指向这个函数；因为这样我们之后再想获取这个div就可以直接用this.div了好吗；而不是在document.getElementById（。。。。）
+            this.btn  = doc.getElementById(btn);
+            this.Input = this.div.getElementsByTagName("input")[0];//既然找到了div我们在找下div下面的input；当然你要不input用获取id的形式传参数我没有意见
+            this.num = 0;//你也可以写一些其他的默认的东西；比如默认的变量啦；方便下面调用；这里写了什么都不会报错；只是有用没用的问题这行可以忽略
+            this.author = "lianxiaozhuang";
+            this.init();//执行下你下面写的函数吧；你想想；如果整个插件没有执行函数；多不好；一堆方法function就不调用；对；这里是调用的时候最开始执行的函数
+        }
+        //；给构造函数addHtml对象原型里添加属性（方法）
+        addHtml.prototype = {//给函数写方法；这里可能不止一个函数；你还记得你在全局里写一个个的function吗；贼乱；
+            //找也不好找；把一个个函数都写到对象的属性里；调用函数就直接调用对象的属性；
+            constructor:addHtml,//构造器指向构造函数；这行其实不写没啥毛病；不过有时候防止构造器指向Object的情况；你还是装逼写上吧；
+            init:function(){//这里的init；你也可以写成  nimade:function(){ }都没有问题；就是在addHtml函数里this.init();执行下；你明白了这里的this了吧；整个插件里this都是只得这个函数（实例）；除非你又引入了其他的函数里的（其他函数里的可能指向就是window了）
+                var _self = this;////把this保存下来防止在局部函数内部取不到（局部函数内部取得this可能是别的）
+                this.btn.onclick = function(){
+                    var _val = _self.Input.value;
+                    var tempdiv = doc.createElement("div");//创建临时div存放获取input的值
+                    tempdiv.innerHTML = _val;
+                    //console.log(tempdiv);
+                    _self.div.appendChild(tempdiv);
+                    _self.setColor();//你把所有方法都写在init里绝对没问题；还是那句话；说好的松耦合呢；说好的不写一堆堆的function一层层乱套呢
+                };
+
+            },
+            setColor:function(){
+                //console.log(this.div)
+                this.div.style.color= "red"
+            }/*,
+        otherFun(){
+            //当然你还可以扩展其他方法；这些方法之间都可以互相调用；
+            只要用this.方法名       就行了；如果在取不到this比如上面的click函数中的this指向点击的button；只要在写var _self = this;就可以用_self  代替this（函数实例）了；当然_self  也可以写成别的 比如$this等自定义的
+        }*/
+
+        }
+
+        win.addHtml = addHtml;//把这个对象附给window底下的 名字叫addHtml的对象；要不你调用的时候  new addHtml() 怕在window的环境下找不到；
+    }(window,document))
+</script>
+<script type="text/javascript">
+    new addHtml("demo-1","add-1");//这里是实例1调用插件的代码
+    new addHtml("demo-2","add-2");    //这里是实例2调用插件的代码
+    //是不是明白为什么要写插件了；要封装；两个相同组件即使有相同的class名在dom操作的时候也不会相互冲突；因为他们都new出来了个自的实例；有自己的this；有自己的一套方法了（其实方法都在原型里是公用的；操作各自的dom）
+</script>
+<!--这里是最简单的插件写法；当然还有传对象参数的插件等等。。。。-->
+</body>
+</html>
