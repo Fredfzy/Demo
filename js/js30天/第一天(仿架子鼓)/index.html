@@ -5,71 +5,143 @@
     <title>仿照架子鼓</title>
 </head>
 <style>
-    body,html{
-        margin:0;
-        padding:0;
+    body, html {
+        margin: 0;
+        padding: 0;
         font-family: sans-serif;
     }
-    html{
+
+    html {
         width: 100%;
         height: 100%;
         font-size: 10px !important;
-        background: url("http://i.imgur.com/b9r5sEL.jpg")  no-repeat;
-        background-size:100%;
+        background: url("http://i.imgur.com/b9r5sEL.jpg") no-repeat;
+        background-size: 100%;
     }
-    body{
+
+    body {
         height: 100%;
     }
-    .keys{
+
+    .keys {
         display: flex;
-        flex:1;
+        flex: 1;
         min-height: 100%;
         justify-content: center;
         align-items: center;
     }
-    .key{
+
+    .key {
         margin: 1rem;
         border: 0.4rem solid black;
         padding: 0.5rem;
         text-align: center;
-        border-radius:0.3rem;
+        border-radius: 0.3rem;
+        /*定义动画在0.1s完成*/
         transition: all 0.1s;
         width: 10rem;
         font-size: 1.5rem;
-        color:#fff;
+        color: #fff;
         background: rgba(0, 0, 0, 0.4);
     }
+
     kbd {
         display: block;
         font-size: 4rem;
     }
+
+    .sound {
+        font-size: 1.2rem;
+        color: #ffc600;
+        /*将文本字母全部转换成大写*/
+        text-transform: uppercase;
+        /*减少和增加字符间的空白*/
+        letter-spacing: 0.1rem;
+    }
+
+    .playing {
+        /*旋转(rotate)、缩放(scale)、位移(translate)*/
+        transform: scale(1.3);
+        border-color: #ffc600;
+        box-shadow: 0 0 1rem #ffc600;
+    }
 </style>
 <body>
-    <div class="keys">
-        <div class="key">
-            <kbd>A</kbd>
-            <span>CLAP</span>
-        </div>
-        <div class="key">
-            <kbd>A</kbd>
-            <span>CLAP</span>
-        </div>
-        <div class="key">
-            <kbd>A</kbd>
-            <span>CLAP</span>
-        </div>
-        <div class="key">
-            <kbd>A</kbd>
-            <span>CLAP</span>
-        </div>
-        <div class="key">
-            <kbd>A</kbd>
-            <span>CLAP</span>
-        </div>
-        <div class="key">
-            <kbd>A</kbd>
-            <span>CLAP</span>
-        </div>
+<div class="keys">
+    <div data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
     </div>
+    <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+    </div>
+</div>
+<audio data-key="65" src="sounds/clap.wav"></audio>
+<audio data-key="83" src="sounds/hihat.wav"></audio>
+<audio data-key="68" src="sounds/kick.wav"></audio>
+<audio data-key="70" src="sounds/openhat.wav"></audio>
+<audio data-key="71" src="sounds/boom.wav"></audio>
+<audio data-key="72" src="sounds/ride.wav"></audio>
+<audio data-key="74" src="sounds/snare.wav"></audio>
+<audio data-key="75" src="sounds/tom.wav"></audio>
+<audio data-key="76" src="sounds/tink.wav"></audio>
 </body>
 </html>
+<script>
+    //拿到所有className为key的集合，并将集合转换成数组
+    var keys = Array.from(document.querySelectorAll('.key'));
+    // 遍历对象，并监听每一个对象的transitionend事件，移除动画
+    keys.forEach(key => key.addEventListener('transitionend', remove));
+
+    //开始动画
+    function play(e) {
+        var audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        var key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+        if (!audio) {
+            return;
+        }
+        key.classList.add('playing');
+        audio.currentTime = 0;//重置播放时间，保证每次按动都是从0秒播放
+        audio.play();
+    }
+    // 结束动画
+    function remove(e) {
+        if (e.propertyName !== 'transform') {
+            return;
+        }
+        // 这里this和e.target是等价的
+        e.target.classList.remove('playing');
+    }
+
+   //监听keydown事件
+    window.addEventListener('keydown', play);
+</script>
