@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js和css3实现滑块功能</title>
+</head>
+<style>
+    :root {
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+    }
+    img {
+        width: 600px;
+        height: 400px;
+        padding: var(--spacing);
+        background: var(--base);
+        /*css的滤镜效果，blur()设置高斯模糊*/
+        filter: blur(var(--blur));
+    }
+
+    body {
+        text-align: center;
+        background: #193549;
+        color: #fff;
+        font-family: 'helvetica neue', sans-serif;
+        font-weight: 100;
+        font-size: 30px;
+    }
+
+    .controls {
+        margin-bottom: 50px;
+    }
+
+    input {
+        width: 100px;
+    }
+    .result{
+        display: flex;
+        /*规定flex方向*/
+        flex-direction: row;
+        justify-content: center;
+        color: var(--base);
+    }
+    .showText {
+        margin: 0px 25px 50px 25px;
+    }
+</style>
+<body>
+<div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <label for="base">Base:</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+</div>
+<div class="result">
+    <div class="showText">{spacing:<label id="label_spacing">#ffc600</label>}</div>
+    <div class="showText">{blur:<label id="label_blur">10px</label>}</div>
+    <div class="showText">{base:<label id="label_base">10px</label>}</div>
+</div>
+<img src="http://f.hiphotos.baidu.com/lvpics/h=800/sign=b346032cbe389b5027ffed52b534e5f1/960a304e251f95ca545f8b84ce177f3e6709525d.jpg">
+</body>
+</html>
+<script>
+    var inputs=document.querySelectorAll('.controls input');
+    function getUpdate() {
+        var size=this.dataset.sizing || '';
+        // dom.style.setProperty() 方法接口为一个声明了CSS样式的对象设置一个新的值
+        document.documentElement.style.setProperty(`--${this.name}`,`${this.value}`+size);
+        document.getElementById(`label_${this.name}`).innerText=`${this.value}`+size;
+    }
+    inputs.forEach(item=>item.addEventListener('change',getUpdate));
+    inputs.forEach(item=>item.addEventListener('mousemove',getUpdate));
+</script>
