@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组的使用一</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // console.table()在谷歌浏览器里打印表格
+    const inventors = [
+        {
+            first: 'Albert',
+            last: 'Einstein',
+            year: 1879,
+            passed: 1955
+        },
+        {
+            first: 'Isaac',
+            last: 'Newton',
+            year: 1643,
+            passed: 1727
+        },
+        {
+            first: 'Galileo',
+            last: 'Galilei',
+            year: 1564,
+            passed: 1642
+        },
+        {
+            first: 'Marie',
+            last: 'Curie',
+            year: 1867,
+            passed: 1934
+        },
+        {
+            first: 'Johannes',
+            last: 'Kepler',
+            year: 1571,
+            passed: 1630
+        },
+        {
+            first: 'Nicolaus',
+            last: 'Copernicus',
+            year: 1473,
+            passed: 1543
+        },
+        {
+            first: 'Max',
+            last: 'Planck',
+            year: 1858,
+            passed: 1947
+        },
+        {
+            first: 'Katherine',
+            last: 'Blodgett',
+            year: 1898,
+            passed: 1979
+        },
+        {
+            first: 'Ada',
+            last: 'Lovelace',
+            year: 1815,
+            passed: 1852
+        },
+        {
+            first: 'Sarah E.',
+            last: 'Goode',
+            year: 1855,
+            passed: 1905
+        },
+        {
+            first: 'Lise',
+            last: 'Meitner',
+            year: 1878,
+            passed: 1968
+        },
+        {
+            first: 'Hanna',
+            last: 'Hammarström',
+            year: 1829,
+            passed: 1909
+        }
+    ];
+    // console.table(inventors);
+    // 1.获取16世纪的科学家
+    // 方法一：
+    var arr=inventors.filter(item => (item.year>=1500 && item.year<1600));
+    // 方法二：
+    // var arr=inventors.filter(function (item) {
+    //     if(item.year>=1500 && item.year<1600){
+    //         return true;
+    //     }
+    //     else {
+    //         return false;
+    //     }
+    // })
+    console.table(arr);
+    // 2.显示科学家的姓名
+    // 方法一：
+    // var arr1=inventors.map(item=>`${item.first} ${item.last}`);
+    // 方法二：
+    var arr1=inventors.map(function (item) {
+        item.name=`${item.first} ${item.last}`;
+        // return item.name;
+        return item;
+    })
+    console.table(arr1);
+</script>
