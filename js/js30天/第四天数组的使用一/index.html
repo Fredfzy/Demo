@@ -85,6 +85,7 @@
         }
     ];
     // console.table(inventors);
+    
     // 1.获取16世纪的科学家
     // 方法一：
     var arr=inventors.filter(item => (item.year>=1500 && item.year<1600));
@@ -98,6 +99,7 @@
     //     }
     // })
     console.table(arr);
+
     // 2.显示科学家的姓名
     // 方法一：
     // var arr1=inventors.map(item=>`${item.first} ${item.last}`);
@@ -108,4 +110,89 @@
         return item;
     })
     console.table(arr1);
+
+    // 3.按照年龄大小进行排序
+    // 方法一：
+    // var arr2=inventors.sort((a,b)=>(a.year-b.year));//从小到大
+    // var arr2=inventors.sort((a,b)=>(b.year-a.year));//从大到小
+    // 方法二:
+    var arr2=inventors.sort(function (a,b) {
+        //从小到大
+         return a.year-b.year;
+         // 从大到小
+         return b.year-a.year;
+    })
+    console.table(arr2);
+
+    // 计算所有发明家一共活了多少岁
+    // 方法一：
+    // var arr3=inventors.reduce(function (a,b) {
+    //     return a+(b.passed-b.year);
+    // },0)
+    // console.log(arr3);
+    // 方法二:
+    var arr3=inventors.reduce((a,b)=>(a+(b.passed-b.year)),0);
+    console.log(arr3);
+
+    // 按照活多长时间进行排序
+    // 方法一：
+    // var arr4=inventors.sort(function (a,b) {
+    //     var firstInventors=a.passed-a.year;
+    //     var nextInventors=b.passed-b.year;
+    //     // return firstInventors-nextInventors;//从小到大
+    //     return nextInventors-firstInventors;//从大到小
+    // })
+    // console.table(arr4);
+    // 方法二：
+    var arr4=inventors.sort((a,b)=>{
+        var firstInventors=a.passed-a.year;
+        var nextInventors=b.passed-b.year;
+        return firstInventors-nextInventors;//从小到大
+        // return nextInventors-firstInventors;//从大到小
+    })
+    console.table(arr4);
+
+    // map、filter结合使用筛选出网页中含有CSS标题的数据名称
+    const category = document.querySelectorAll('.subject-list h2 a');
+    const links = Array.from(category);
+    const CSS_BOOK = links
+        .map(link => link.textContent)
+        //includes() 方法用于判断一个字符串是否包含在另一个字符串中，根据情况返回 true 或 false
+        .filter(streetName => streetName.includes('CSS'));
+
+    // 按照姓氏来对发明家进行排序
+    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry',
+        'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert',
+        'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester',
+        'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano',
+        'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle',
+        'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose',
+        'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black Elk', 'Blair, Robert',
+        'Blair, Tony', 'Blake, William'
+    ];
+    const alpha = people.sort((lastOne, nextOne) => {
+        const [aLast, aFirst] = lastOne.split(', ');
+        const [bLast, bFirst] = nextOne.split(', ');
+        // console.log([aLast, aFirst]);
+        // console.log([bLast, bFirst]);
+        // return aLast-bLast;
+        // return bLast-aLast;
+        // console.log(aLast > bLast);
+        return aLast > bLast ? 1 : -1;
+
+    });
+    console.log(alpha);
+
+    // 统计给出数组中各个物品的数量
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car',
+        'truck', 'pogostick'
+    ];
+    var arr5=data.reduce(function (obj,key) {
+       if(!obj[key]){
+           obj[key]=0;
+       }
+        obj[key]++;
+        return obj;
+    },{})
+    console.log(arr5);
 </script>
