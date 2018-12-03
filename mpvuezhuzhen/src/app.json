@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/qiyeindex/main",
+    "pages/cropDemand/main",
+    "pages/farmingCycle/main",
+    "pages/productTraceability/main",
+    "pages/tourismPush/main",
+    "pages/qiye_detail/main"
+  ],
+  "subPackages":[
+    {
+      "root": "pages/zigBee",
+      "pages": [
+        "barlowVegetableGarden/main"
+      ]
+    },
+    {
+      "root": "pages/nonghu_index",
+      "pages": [
+        "index/main",
+        "productTraceability/main",
+        "cropDemand/main"
+      ]
+    },
+    {
+      "root": "pages/youke_index",
+      "pages": [
+        "index/main",
+        "binding/main",
+        "identity/main"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "多彩竹镇",
+    "navigationBarTextStyle": "black"
+  }
+}
