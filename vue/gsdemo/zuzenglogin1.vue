@@ -13,11 +13,11 @@
           <div class="text" >
             <div class="text1">
               <img  src="/static/img1/zuzenglogin/icon_user.png" alt="">
-              <input type="text" style="outline:none;background-color:transparent !important;color: #afdeff !important;" placeholder="请输入帐号" v-model="userInfo.loginName">
+              <input type="text" style="outline:none;background-color:transparent !important;color: #afdeff !important;" placeholder="请输入帐号" v-model="userInfo.loginName" @keyup.native.enter="show($event)">
             </div>
             <div class="text1">
               <img src="/static/img1/zuzenglogin/icon_password.png" alt="">
-              <input type="text" style="outline:none;background-color:transparent !important;color: #afdeff !important;" placeholder="请输入密码" v-model="userInfo.password" >
+              <input type="password" style="outline:none;background-color:transparent !important;color: #afdeff !important;" placeholder="请输入密码" v-model="userInfo.password" @keyup.native.enter="show($event)">
             </div>
           </div>
           <div class="pig10" @click="check">
@@ -46,7 +46,14 @@
         }
       }
     },
-    updated(){
+    created(){
+      if(window.localStorage.getItem('accessToken')){
+        // this.$router.push({path:'/zuzenghome'});
+        this.$router.push({path:'/usermanagement'});
+      }
+    },
+    mounted:function () {
+      this.model=true;
       this.isFullscreen();
     },
     methods: {
@@ -61,15 +68,47 @@
         obj.password=this.userInfo.password;
         // console.log(obj);
         obj=JSON.stringify(obj);
-        this.$router.push({path:'/zuzenghome'});
+        this.$http.post(this.url+"/api/1.0/system/user/Login",
+          obj,
+          // alert(this.goUrl.action.login);
+          // this.$http.post(this.goUrl.action.login,JSON.stringify(this.userInfo),
+          {emulateJSON:true}).then(
+          function (res) {
+            // 处理成功的结果
+            if(res.body.status=="SUCCESS"){
+              this.$message({
+                type:'success',
+                message:'登录成功!'
+              });
+              this.$store.commit("addUserInfo",JSON.stringify(res.body.data.userInfo)) ;
+              this.$store.commit("addToken",res.body.data.token);
+              let menu=JSON.stringify(res.body.data.menu);
+              this.$store.commit("addMenu",menu);
+              if (window.localStorage.getItem('accessToken')) {
+                // this.$router.push({path:'/zuzenghome'});
+                this.$router.push({path:'/usermanagement'});
+                window.localStorage.setItem('isRefresh',"true");
+              }
+            }
+            else{
+              this.$message.error(res.body.message);
+            }
+          },function (res) {
+            //处理失败
+          }
+        )
+        // this.$router.push({path:'/zuzenghome'});
+        // this.$router.push({path:'/index'});
       },
-      isFullscreen() {//打开全屏
+      isFullscreen:function(){//打开全屏
         // 判断各种浏览器，找到正确的方法
+        console.log(111111);
         let requestMethod = document.documentElement.requestFullScreen || //W3C
           document.documentElement.webkitRequestFullScreen || //Chrome等
           document.documentElement.mozRequestFullScreen || //FireFox
           document.documentElement.msRequestFullScreen; //IE11
         if (requestMethod) {
+          // requestMethod.call(document.documentElement);
           requestMethod.call(document.documentElement);
         }
         else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
@@ -78,11 +117,9 @@
             wscript.SendKeys("{F11}");
           }
         }
-      },
+        console.log(111111);
+      }
     },
-    mounted:function () {
-      this.model=true;
-    }
   }
 </script>
 
@@ -166,5 +203,15 @@
     color: #8ed0ff;
     font-size: 22px;
     cursor: pointer;
+  }
+  input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-text-fill-color: #ededed !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent  inset !important;
+    background-color:transparent;
+    background-image: none;
+    transition: background-color 50000s ease-in-out 0s;
+  }
+  input {
+    background-color: transparent;
   }
 </style>
